@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BingoCard } from "./BingoCard";
 import { MeetingType } from "@shared/schema";
+import confetti from "canvas-confetti";
 
 interface BingoCardContainerProps {
   meetingType: string;
@@ -59,9 +60,59 @@ export function BingoCardContainer({
   }, [hasBingo]);
 
   const generateConfetti = () => {
-    // This could be implemented with a canvas-based confetti library
-    // or by adding elements to the DOM programmatically
     console.log("Generating confetti celebration!");
+    
+    // Create intense confetti burst
+    const count = 300;
+    const defaults = { 
+      origin: { y: 0.7 },
+      spread: 90,
+      startVelocity: 30,
+      gravity: 0.5,
+      ticks: 300,
+      zIndex: 9999,
+      disableForReducedMotion: true
+    };
+
+    function fire(particleRatio: number, opts: any) {
+      confetti({
+        ...defaults,
+        ...opts,
+        particleCount: Math.floor(count * particleRatio),
+      });
+    }
+
+    // Launch multiple bursts for a richer effect
+    fire(0.25, {
+      spread: 26,
+      startVelocity: 55,
+      origin: { x: 0.2, y: 0.7 },
+      colors: ['#5D5FEF', '#8B5CF6', '#EC4899', '#22C55E']
+    });
+    fire(0.25, {
+      spread: 30,
+      origin: { x: 0.8, y: 0.7 },
+      colors: ['#3B82F6', '#22D3EE', '#10B981', '#6366F1']
+    });
+    
+    // Central burst
+    fire(0.3, {
+      spread: 120,
+      origin: { x: 0.5, y: 0.7 },
+      startVelocity: 30,
+      decay: 0.95,
+      colors: ['#6366F1', '#EC4899', '#22C55E', '#EAB308', '#F97316']
+    });
+
+    // Add a delayed secondary burst for continued celebration
+    setTimeout(() => {
+      fire(0.2, {
+        spread: 70,
+        decay: 0.92,
+        origin: { x: 0.5, y: 0.7 },
+        colors: ['#6366F1', '#8B5CF6', '#D946EF', '#EC4899']
+      });
+    }, 600);
   };
 
   return (

@@ -123,11 +123,25 @@ export function ControlPanel({
             ))}
           </div>
 
-          {/* Title with dice icon */}
+          {/* Title with animated dice icon */}
           <h2 className="text-xl font-bold bg-gradient-to-r from-indigo-300 to-purple-300 text-transparent bg-clip-text mb-4 flex items-center">
-            <svg className="w-6 h-6 mr-2 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 14c.5.5.5 1.5 0 2L17 18.5c-.5.5-1.5.5-2 0l-2.5-2.5c-.5-.5-.5-1.5 0-2l2.5-2.5c.5-.5 1.5-.5 2 0l2.5 2.5zM7 5.5c.5-.5 1.5-.5 2 0L11.5 8c.5.5.5 1.5 0 2L9 12.5c-.5.5-1.5.5-2 0L4.5 10c-.5-.5-.5-1.5 0-2L7 5.5z" />
-            </svg>
+            <motion.div
+              className="mr-2"
+              animate={{ 
+                rotate: [0, 10, -10, 10, 0],
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "loop",
+                ease: "easeInOut",
+                repeatDelay: 5
+              }}
+            >
+              <svg className="w-6 h-6 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.5 14c.5.5.5 1.5 0 2L17 18.5c-.5.5-1.5.5-2 0l-2.5-2.5c-.5-.5-.5-1.5 0-2l2.5-2.5c.5-.5 1.5-.5 2 0l2.5 2.5zM7 5.5c.5-.5 1.5-.5 2 0L11.5 8c.5.5.5 1.5 0 2L9 12.5c-.5.5-1.5.5-2 0L4.5 10c-.5-.5-.5-1.5 0-2L7 5.5z" />
+              </svg>
+            </motion.div>
             Play
           </h2>
           
@@ -159,15 +173,6 @@ export function ControlPanel({
               )}
             </div>
             
-            {/* Meeting type description */}
-            <div className="mt-2 mb-2">
-              {selectedMeetingType && meetingTypeQuips[selectedMeetingType] && (
-                <p className="text-xs text-indigo-300 italic glass bg-white/5 rounded-lg p-3 border border-indigo-300/10">
-                  {meetingTypeQuips[selectedMeetingType]}
-                </p>
-              )}
-            </div>
-            
             <Button 
               className="w-full floating-button relative group mt-4"
               onClick={handleGenerateClick}
@@ -183,63 +188,6 @@ export function ControlPanel({
               </span>
             </Button>
           </div>
-          
-          {/* Card navigation area - only show if cards exist */}
-          {cardSet && cardSet.cards.length > 0 && (
-            <div className="space-y-4 mb-6">
-              <div>
-                <Label className="text-sm font-medium text-indigo-200 mb-2 block">
-                  Card Navigation
-                </Label>
-                <div className="glass bg-white/5 rounded-lg p-3 border border-indigo-300/20">
-                  <div className="flex justify-between items-center mb-3">
-                    <Badge variant="outline" className="bg-indigo-800/30 text-indigo-200 border-indigo-500/30">
-                      Active: Card {cardSet.activeCardIndex + 1} of {cardSet.cards.length}
-                    </Badge>
-                    
-                    <Badge variant="outline" className="bg-indigo-800/30 text-indigo-200 border-indigo-500/30">
-                      {meetingTypes?.find(m => m.name === meetingType)?.displayName || meetingType}
-                    </Badge>
-                  </div>
-                  
-                  <div className="grid grid-cols-5 gap-1">
-                    {Array.from({ length: cardSet.cards.length }).map((_, index) => {
-                      const cardNumber = index + 1;
-                      const isActive = index === cardSet.activeCardIndex;
-                      const hasBingo = cardSet.cards[index]?.hasBingo;
-                      
-                      return (
-                        <Button 
-                          key={index}
-                          variant={isActive ? "default" : "outline"}
-                          size="sm"
-                          className={`
-                            p-0 h-9
-                            ${isActive 
-                              ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-none' 
-                              : hasBingo
-                                ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/30 text-green-300'
-                                : 'bg-white/5 border-indigo-300/30 text-indigo-100'
-                            }
-                          `}
-                          onClick={() => onSwitchCard && onSwitchCard(index)}
-                        >
-                          {cardNumber}
-                          {hasBingo && (
-                            <span className="ml-1 text-xs">✓</span>
-                          )}
-                        </Button>
-                      );
-                    })}
-                  </div>
-                  
-                  <p className="text-indigo-300 text-xs mt-3 text-center">
-                    Click a card number to switch between cards
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
           
           {/* How to Play section */}
           <motion.div 
@@ -264,6 +212,20 @@ export function ControlPanel({
               <li className="text-indigo-300 font-medium">Don't get caught playing!</li>
             </ol>
           </motion.div>
+          
+          {/* Meeting type quote */}
+          {selectedMeetingType && meetingTypeQuips[selectedMeetingType] && (
+            <motion.div
+              className="mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25 }}
+            >
+              <p className="text-xs text-indigo-300 italic glass bg-gradient-to-br from-indigo-800/20 to-purple-800/10 rounded-lg p-3 border border-indigo-300/20">
+                {meetingTypeQuips[selectedMeetingType]}
+              </p>
+            </motion.div>
+          )}
           
           {/* Game Stats section */}
           <motion.div 

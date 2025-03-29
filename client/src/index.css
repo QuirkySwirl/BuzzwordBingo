@@ -68,20 +68,24 @@
   }
 }
 
-/* Glassmorphism styles */
+/* Glassmorphism styles - darker version */
 .glass {
-  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  @apply bg-slate-900/90 backdrop-blur-md border border-indigo-300/30 shadow-xl text-white;
+  color: white !important;
 }
 
 .glass-card {
-  @apply glass rounded-xl;
+  @apply glass rounded-xl text-white;
   transition: all 0.3s ease;
   will-change: transform, opacity;
+  background-color: rgba(15, 23, 42, 0.9) !important; /* slate-900 with opacity */
+  color: white !important;
 }
 
 .glass-card:hover {
-  @apply shadow-lg bg-white/15;
+  @apply shadow-lg bg-indigo-950/80 text-white;
   transform: translateY(-5px);
+  color: white !important;
 }
 
 /* Animations */

@@ -29,46 +29,46 @@ export function BingoCard({
     icons: string[]
   }> = {
     'all-hands': {
-      freeSpaceClasses: "bg-gradient-to-br from-pink-500/40 to-purple-500/40 border-pink-300",
-      markedClasses: "border-indigo-300 bg-indigo-600/30",
-      bingoLineClasses: "border-green-300 bg-emerald-500/30",
-      normalClasses: "border-indigo-300/50 hover:border-indigo-300",
+      freeSpaceClasses: "bg-gradient-to-br from-pink-900 to-purple-900 border-pink-300 text-white",
+      markedClasses: "border-indigo-300 bg-indigo-900 text-white",
+      bingoLineClasses: "border-green-300 bg-emerald-900 text-white",
+      normalClasses: "border-indigo-300/50 hover:border-indigo-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
       stampText: "HEARD",
       icons: ["📊", "🗣️", "💼", "📈"]
     },
     'product': {
-      freeSpaceClasses: "bg-gradient-to-br from-blue-500/40 to-cyan-500/40 border-blue-300",
-      markedClasses: "border-blue-300 bg-blue-600/30",
-      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
-      normalClasses: "border-blue-300/50 hover:border-blue-300",
+      freeSpaceClasses: "bg-gradient-to-br from-blue-900 to-indigo-900 border-blue-300 text-white",
+      markedClasses: "border-blue-300 bg-blue-900 text-white",
+      bingoLineClasses: "border-emerald-300 bg-emerald-900 text-white",
+      normalClasses: "border-blue-300/50 hover:border-blue-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(29,78,216,0.9) 100%)",
       stampText: "NOTED",
       icons: ["💡", "🚀", "🧩", "⚙️"]
     },
     'strategy': {
-      freeSpaceClasses: "bg-gradient-to-br from-amber-500/40 to-orange-500/40 border-amber-300",
-      markedClasses: "border-amber-300 bg-amber-600/30",
-      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
-      normalClasses: "border-amber-300/50 hover:border-amber-300",
+      freeSpaceClasses: "bg-gradient-to-br from-amber-900 to-yellow-900 border-amber-300 text-white",
+      markedClasses: "border-amber-300 bg-amber-900 text-white",
+      bingoLineClasses: "border-emerald-300 bg-emerald-900 text-white",
+      normalClasses: "border-amber-300/50 hover:border-amber-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(245,158,11,0.8) 0%, rgba(217,119,6,0.9) 100%)",
       stampText: "ALIGN",
       icons: ["🎯", "🧠", "🔍", "🧮"]
     },
     'layoff': {
-      freeSpaceClasses: "bg-gradient-to-br from-red-500/40 to-pink-500/40 border-red-300",
-      markedClasses: "border-red-300 bg-red-600/30",
-      bingoLineClasses: "border-violet-300 bg-violet-500/30",
-      normalClasses: "border-red-300/50 hover:border-red-300",
+      freeSpaceClasses: "bg-gradient-to-br from-red-900 to-pink-900 border-red-300 text-white",
+      markedClasses: "border-red-300 bg-red-900 text-white",
+      bingoLineClasses: "border-violet-300 bg-violet-900 text-white",
+      normalClasses: "border-red-300/50 hover:border-red-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
       stampText: "PIVOT",
       icons: ["⚡", "📉", "🧯", "💸"]
     },
     'investor': {
-      freeSpaceClasses: "bg-gradient-to-br from-emerald-500/40 to-green-500/40 border-emerald-300",
-      markedClasses: "border-emerald-300 bg-emerald-600/30",
-      bingoLineClasses: "border-blue-300 bg-blue-500/30",
-      normalClasses: "border-emerald-300/50 hover:border-emerald-300",
+      freeSpaceClasses: "bg-gradient-to-br from-emerald-900 to-green-900 border-emerald-300 text-white",
+      markedClasses: "border-emerald-300 bg-emerald-900 text-white",
+      bingoLineClasses: "border-blue-300 bg-blue-900 text-white",
+      normalClasses: "border-emerald-300/50 hover:border-emerald-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(4,120,87,0.9) 100%)",
       stampText: "FUNDED",
       icons: ["💰", "📊", "💎", "📈"]

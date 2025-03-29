@@ -170,6 +170,7 @@ export function BingoCardContainer({
               markedSquares={markedSquares}
               bingoLines={bingoLines}
               onToggleSquare={onToggleSquare}
+              meetingType={meetingType}
             />
           </motion.div>
           

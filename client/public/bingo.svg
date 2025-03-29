@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818CF8" />
+      <stop offset="100%" stop-color="#C084FC" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E879F9" />
+      <stop offset="100%" stop-color="#F472B6" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="100" height="100" rx="20" ry="20" fill="#1E1B4B" />
+  <rect x="10" y="10" width="25" height="25" rx="6" ry="6" fill="url(#grad1)" opacity="0.9" />
+  <rect x="65" y="10" width="25" height="25" rx="6" ry="6" fill="url(#grad1)" opacity="0.9" />
+  <rect x="10" y="65" width="25" height="25" rx="6" ry="6" fill="url(#grad1)" opacity="0.9" />
+  <rect x="65" y="65" width="25" height="25" rx="6" ry="6" fill="url(#grad1)" opacity="0.9" />
+  <rect x="37.5" y="37.5" width="25" height="25" rx="6" ry="6" fill="url(#grad2)" opacity="0.9" />
+  <text x="20" y="28" font-family="Arial" font-weight="bold" font-size="16" fill="white">B</text>
+  <text x="75" y="28" font-family="Arial" font-weight="bold" font-size="16" fill="white">I</text>
+  <text x="20" y="83" font-family="Arial" font-weight="bold" font-size="16" fill="white">N</text>
+  <text x="75" y="83" font-family="Arial" font-weight="bold" font-size="16" fill="white">O</text>
+  <text x="46" y="55" font-family="Arial" font-weight="bold" font-size="16" fill="white">G</text>
+</svg>

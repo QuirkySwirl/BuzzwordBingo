@@ -13,8 +13,16 @@
     @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-foreground;
     font-family: 'Poppins', sans-serif;
     background-attachment: fixed;
-    -webkit-hyphens: auto;
-    hyphens: auto;
+    scroll-behavior: smooth;
+  }
+  
+  /* Prevent hyphenation in bingo squares for better readability */
+  .bingo-square-text {
+    -webkit-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
   :root {
@@ -153,5 +161,68 @@
     opacity: 0;
     top: 100vh;
     transform: translateX(calc(random() * 100px)) rotateZ(360deg);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-float,
+  .bingo-card-won,
+  .confetti,
+  .bingo-square:hover:not(.marked) {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #818cf8 !important;
+  outline-offset: 2px !important;
+}
+
+/* Stamp effect for marked squares */
+.stamp {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: rgba(220, 38, 38, 0.8);
+  border: 2px solid rgba(220, 38, 38, 0.8);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  text-transform: uppercase;
+  opacity: 0;
+  transform-origin: center;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.marked .stamp {
+  opacity: 1;
+  animation: stamp-appear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes stamp-appear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-15deg) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-15deg) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(-15deg) scale(1);
   }
 }

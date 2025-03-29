@@ -42,9 +42,29 @@ app.use((req, res, next) => {
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
+    
+    // Detailed error logging for debugging
+    console.error(`[ERROR] ${status}: ${message}`);
+    if (err.stack) {
+      console.error(err.stack);
+    }
+    
+    // Send appropriate error message based on status code
+    let clientMessage = message;
+    if (status === 500 && process.env.NODE_ENV === 'production') {
+      // Don't expose internal error details in production
+      clientMessage = "An unexpected error occurred. Please try again later.";
+    }
+    
+    res.status(status).json({ 
+      status: status,
+      message: clientMessage,
+      error: true,
+      timestamp: new Date().toISOString(),
+    });
+    
+    // Don't throw the error again as it will crash the server
+    // Instead, let the middleware handle it
   });
 
   // importantly only setup vite in development and after

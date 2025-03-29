@@ -60,12 +60,13 @@ export default function NotFound() {
                 Oops! Looks like you wandered into a meeting that doesn't exist. Let's get you back to where the buzzwords are flowing freely.
               </motion.p>
               
-              <Button 
-                onClick={() => window.location.href = '/'}
-                className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-6"
-              >
-                Return to Bingo Game
-              </Button>
+              <Link href="/">
+                <Button 
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-6"
+                >
+                  Return to Bingo Game
+                </Button>
+              </Link>
               
               <motion.div 
                 className="mt-6 text-indigo-300 text-sm"

@@ -7,14 +7,76 @@ interface BingoCardProps {
   markedSquares: boolean[];
   bingoLines: number[][];
   onToggleSquare: (index: number) => void;
+  meetingType?: string; // Optional meeting type for themed cards
 }
 
 export function BingoCard({ 
   words, 
   markedSquares, 
   bingoLines, 
-  onToggleSquare 
+  onToggleSquare,
+  meetingType = 'all-hands' // Default meeting type
 }: BingoCardProps) {
+  
+  // Theme configurations for different meeting types
+  const themeConfig: Record<string, {
+    freeSpaceClasses: string, 
+    markedClasses: string,
+    bingoLineClasses: string,
+    normalClasses: string,
+    stampColor: string,
+    stampText: string,
+    icons: string[]
+  }> = {
+    'all-hands': {
+      freeSpaceClasses: "bg-gradient-to-br from-pink-500/40 to-purple-500/40 border-pink-300",
+      markedClasses: "border-indigo-300 bg-indigo-600/30",
+      bingoLineClasses: "border-green-300 bg-emerald-500/30",
+      normalClasses: "border-indigo-300/50 hover:border-indigo-300",
+      stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
+      stampText: "HEARD",
+      icons: ["📊", "🗣️", "💼", "📈"]
+    },
+    'product': {
+      freeSpaceClasses: "bg-gradient-to-br from-blue-500/40 to-cyan-500/40 border-blue-300",
+      markedClasses: "border-blue-300 bg-blue-600/30",
+      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
+      normalClasses: "border-blue-300/50 hover:border-blue-300",
+      stampColor: "radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(29,78,216,0.9) 100%)",
+      stampText: "NOTED",
+      icons: ["💡", "🚀", "🧩", "⚙️"]
+    },
+    'strategy': {
+      freeSpaceClasses: "bg-gradient-to-br from-amber-500/40 to-orange-500/40 border-amber-300",
+      markedClasses: "border-amber-300 bg-amber-600/30",
+      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
+      normalClasses: "border-amber-300/50 hover:border-amber-300",
+      stampColor: "radial-gradient(circle, rgba(245,158,11,0.8) 0%, rgba(217,119,6,0.9) 100%)",
+      stampText: "ALIGN",
+      icons: ["🎯", "🧠", "🔍", "🧮"]
+    },
+    'layoff': {
+      freeSpaceClasses: "bg-gradient-to-br from-red-500/40 to-pink-500/40 border-red-300",
+      markedClasses: "border-red-300 bg-red-600/30",
+      bingoLineClasses: "border-violet-300 bg-violet-500/30",
+      normalClasses: "border-red-300/50 hover:border-red-300",
+      stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
+      stampText: "PIVOT",
+      icons: ["⚡", "📉", "🧯", "💸"]
+    },
+    'investor': {
+      freeSpaceClasses: "bg-gradient-to-br from-emerald-500/40 to-green-500/40 border-emerald-300",
+      markedClasses: "border-emerald-300 bg-emerald-600/30",
+      bingoLineClasses: "border-blue-300 bg-blue-500/30",
+      normalClasses: "border-emerald-300/50 hover:border-emerald-300",
+      stampColor: "radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(4,120,87,0.9) 100%)",
+      stampText: "FUNDED",
+      icons: ["💰", "📊", "💎", "📈"]
+    }
+  };
+  
+  // Get theme configuration or default to all-hands
+  const theme = themeConfig[meetingType] || themeConfig['all-hands'];
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [confetti, setConfetti] = useState<{x: number, y: number, color: string}[]>([]);
 
@@ -130,10 +192,10 @@ export function BingoCard({
               className={cn(
                 "bingo-square relative aspect-square flex items-center justify-center p-2 text-center text-sm md:text-base font-medium",
                 "backdrop-blur-sm shadow-lg border",
-                isMarked && !isFreeSpace && "glass border-indigo-300 text-white marked",
-                isFreeSpace && "bg-gradient-to-br from-pink-500/40 to-purple-500/40 border-pink-300 text-white font-bold",
-                isInBingoLine && "bingo-card-won font-bold border-green-300 bg-emerald-500/30 text-white",
-                !isMarked && !isFreeSpace && "glass border-indigo-300/50 text-indigo-100 hover:border-indigo-300 cursor-pointer"
+                isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-white marked`,
+                isFreeSpace && `${theme.freeSpaceClasses} text-white font-bold`,
+                isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-white`,
+                !isMarked && !isFreeSpace && `glass ${theme.normalClasses} text-indigo-100 cursor-pointer`
               )}
               onClick={() => handleSquareClick(index)}
             >
@@ -181,14 +243,14 @@ export function BingoCard({
                       <div className="absolute inset-0 rounded-full" 
                         style={{ 
                           boxShadow: "inset 0 0 15px rgba(0,0,0,0.4)",
-                          background: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)"
+                          background: theme.stampColor
                         }}
                       />
                     </div>
                     
                     {/* Stamp text */}
                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold">
-                      <span className="text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>HEARD</span>
+                      <span className="text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>{theme.stampText}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -200,9 +262,14 @@ export function BingoCard({
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
-                  <svg className="w-full h-full text-pink-100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="currentColor" />
-                  </svg>
+                  {/* Theme-specific icon or shape */}
+                  {theme.icons && theme.icons.length > 0 ? (
+                    <div className="text-6xl opacity-30">{theme.icons[Math.floor(Math.random() * theme.icons.length)]}</div>
+                  ) : (
+                    <svg className="w-full h-full text-pink-100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="currentColor" />
+                    </svg>
+                  )}
                 </motion.div>
               )}
             </motion.div>

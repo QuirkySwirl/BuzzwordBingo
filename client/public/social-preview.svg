@@ -1,0 +1,126 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#312E81" />
+    </linearGradient>
+    
+    <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A5B4FC" />
+      <stop offset="50%" stop-color="#E9D5FF" />
+      <stop offset="100%" stop-color="#FBC4FF" />
+    </linearGradient>
+    
+    <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.3" />
+    </linearGradient>
+    
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Main background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)" />
+  
+  <!-- Decorative elements -->
+  <g opacity="0.2">
+    <circle cx="200" cy="150" r="100" fill="#6366F1" />
+    <circle cx="1000" cy="450" r="150" fill="#8B5CF6" />
+    <circle cx="600" cy="100" r="50" fill="#EC4899" />
+    <circle cx="250" cy="500" r="70" fill="#6366F1" />
+    <circle cx="950" cy="180" r="80" fill="#EC4899" />
+  </g>
+  
+  <!-- Background grid pattern -->
+  <g opacity="0.1" stroke="#FFFFFF" stroke-width="1">
+    <path d="M0 100 H1200 M0 200 H1200 M0 300 H1200 M0 400 H1200 M0 500 H1200 M0 600 H1200" />
+    <path d="M100 0 V630 M200 0 V630 M300 0 V630 M400 0 V630 M500 0 V630 M600 0 V630 M700 0 V630 M800 0 V630 M900 0 V630 M1000 0 V630 M1100 0 V630" />
+  </g>
+  
+  <!-- Main content -->
+  <g filter="url(#glow)">
+    <text x="600" y="200" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#titleGradient)" text-anchor="middle">
+      Corporate Buzzword Bingo
+    </text>
+    
+    <text x="600" y="270" font-family="Arial, sans-serif" font-size="36" fill="#A5B4FC" text-anchor="middle">
+      Making meetings bearable since the age of AI
+    </text>
+  </g>
+  
+  <!-- Simplified bingo card -->
+  <g transform="translate(350, 320)">
+    <rect x="0" y="0" width="500" height="250" rx="15" ry="15" fill="url(#cardGradient)" stroke="#8B5CF6" stroke-width="2" />
+    
+    <!-- Bingo squares -->
+    <g font-family="Arial, sans-serif" font-size="16" fill="#FFFFFF">
+      <!-- Row 1 -->
+      <rect x="10" y="10" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.4" stroke="#8B5CF6" stroke-width="1" />
+      <text x="55" y="40" text-anchor="middle">Synergy</text>
+      
+      <rect x="110" y="10" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="155" y="40" text-anchor="middle">Leverage</text>
+      
+      <rect x="210" y="10" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="255" y="40" text-anchor="middle">Disrupt</text>
+      
+      <rect x="310" y="10" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.4" stroke="#8B5CF6" stroke-width="1" />
+      <text x="355" y="40" text-anchor="middle">Bandwidth</text>
+      
+      <rect x="410" y="10" width="80" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="450" y="40" text-anchor="middle">Pivot</text>
+      
+      <!-- Row 2 -->
+      <rect x="10" y="70" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="55" y="100" text-anchor="middle">Deep Dive</text>
+      
+      <rect x="110" y="70" width="90" height="50" rx="5" ry="5" fill="#EC4899" opacity="0.4" stroke="#EC4899" stroke-width="1" />
+      <text x="155" y="100" text-anchor="middle">Ideate</text>
+      
+      <rect x="210" y="70" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="255" y="100" text-anchor="middle">Actionable</text>
+      
+      <rect x="310" y="70" width="90" height="50" rx="5" ry="5" fill="#10B981" opacity="0.4" stroke="#10B981" stroke-width="1" />
+      <text x="355" y="100" text-anchor="middle">BINGO!</text>
+      
+      <rect x="410" y="70" width="80" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="450" y="100" text-anchor="middle">Agile</text>
+      
+      <!-- Row 3 -->
+      <rect x="10" y="130" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="55" y="160" text-anchor="middle">Circle Back</text>
+      
+      <rect x="110" y="130" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="155" y="160" text-anchor="middle">KPI</text>
+      
+      <rect x="210" y="130" width="90" height="50" rx="5" ry="5" fill="#D946EF" opacity="0.4" stroke="#D946EF" stroke-width="1" />
+      <text x="255" y="160" text-anchor="middle">FREE</text>
+      
+      <rect x="310" y="130" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="355" y="160" text-anchor="middle">Deliverable</text>
+      
+      <rect x="410" y="130" width="80" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="450" y="160" text-anchor="middle">Scale</text>
+      
+      <!-- Row 4 -->
+      <rect x="10" y="190" width="90" height="50" rx="5" ry="5" fill="#10B981" opacity="0.4" stroke="#10B981" stroke-width="1" />
+      <text x="55" y="220" text-anchor="middle">Alignment</text>
+      
+      <rect x="110" y="190" width="90" height="50" rx="5" ry="5" fill="#10B981" opacity="0.4" stroke="#10B981" stroke-width="1" />
+      <text x="155" y="220" text-anchor="middle">Ecosystem</text>
+      
+      <rect x="210" y="190" width="90" height="50" rx="5" ry="5" fill="#10B981" opacity="0.4" stroke="#10B981" stroke-width="1" />
+      <text x="255" y="220" text-anchor="middle">ROI</text>
+      
+      <rect x="310" y="190" width="90" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="355" y="220" text-anchor="middle">Low Hanging</text>
+      
+      <rect x="410" y="190" width="80" height="50" rx="5" ry="5" fill="#6366F1" opacity="0.2" stroke="#8B5CF6" stroke-width="1" />
+      <text x="450" y="220" text-anchor="middle">Paradigm</text>
+    </g>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface BingoCardProps {
   words: string[];
@@ -29,46 +29,46 @@ export function BingoCard({
     icons: string[]
   }> = {
     'all-hands': {
-      freeSpaceClasses: "bg-gradient-to-br from-pink-500/40 to-purple-500/40 border-pink-300",
-      markedClasses: "border-indigo-300 bg-indigo-600/30",
-      bingoLineClasses: "border-green-300 bg-emerald-500/30",
-      normalClasses: "border-indigo-300/50 hover:border-indigo-300",
+      freeSpaceClasses: "bg-gradient-to-br from-pink-900 to-purple-900 border-pink-300 text-white",
+      markedClasses: "border-indigo-300 bg-indigo-900 text-white",
+      bingoLineClasses: "border-green-300 bg-emerald-900 text-white",
+      normalClasses: "border-indigo-300/50 hover:border-indigo-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
       stampText: "HEARD",
       icons: ["📊", "🗣️", "💼", "📈"]
     },
     'product': {
-      freeSpaceClasses: "bg-gradient-to-br from-blue-500/40 to-cyan-500/40 border-blue-300",
-      markedClasses: "border-blue-300 bg-blue-600/30",
-      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
-      normalClasses: "border-blue-300/50 hover:border-blue-300",
+      freeSpaceClasses: "bg-gradient-to-br from-blue-900 to-indigo-900 border-blue-300 text-white",
+      markedClasses: "border-blue-300 bg-blue-900 text-white",
+      bingoLineClasses: "border-emerald-300 bg-emerald-900 text-white",
+      normalClasses: "border-blue-300/50 hover:border-blue-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(29,78,216,0.9) 100%)",
       stampText: "NOTED",
       icons: ["💡", "🚀", "🧩", "⚙️"]
     },
     'strategy': {
-      freeSpaceClasses: "bg-gradient-to-br from-amber-500/40 to-orange-500/40 border-amber-300",
-      markedClasses: "border-amber-300 bg-amber-600/30",
-      bingoLineClasses: "border-emerald-300 bg-emerald-500/30",
-      normalClasses: "border-amber-300/50 hover:border-amber-300",
+      freeSpaceClasses: "bg-gradient-to-br from-amber-900 to-yellow-900 border-amber-300 text-white",
+      markedClasses: "border-amber-300 bg-amber-900 text-white",
+      bingoLineClasses: "border-emerald-300 bg-emerald-900 text-white",
+      normalClasses: "border-amber-300/50 hover:border-amber-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(245,158,11,0.8) 0%, rgba(217,119,6,0.9) 100%)",
       stampText: "ALIGN",
       icons: ["🎯", "🧠", "🔍", "🧮"]
     },
     'layoff': {
-      freeSpaceClasses: "bg-gradient-to-br from-red-500/40 to-pink-500/40 border-red-300",
-      markedClasses: "border-red-300 bg-red-600/30",
-      bingoLineClasses: "border-violet-300 bg-violet-500/30",
-      normalClasses: "border-red-300/50 hover:border-red-300",
+      freeSpaceClasses: "bg-gradient-to-br from-red-900 to-pink-900 border-red-300 text-white",
+      markedClasses: "border-red-300 bg-red-900 text-white",
+      bingoLineClasses: "border-violet-300 bg-violet-900 text-white",
+      normalClasses: "border-red-300/50 hover:border-red-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)",
       stampText: "PIVOT",
       icons: ["⚡", "📉", "🧯", "💸"]
     },
     'investor': {
-      freeSpaceClasses: "bg-gradient-to-br from-emerald-500/40 to-green-500/40 border-emerald-300",
-      markedClasses: "border-emerald-300 bg-emerald-600/30",
-      bingoLineClasses: "border-blue-300 bg-blue-500/30",
-      normalClasses: "border-emerald-300/50 hover:border-emerald-300",
+      freeSpaceClasses: "bg-gradient-to-br from-emerald-900 to-green-900 border-emerald-300 text-white",
+      markedClasses: "border-emerald-300 bg-emerald-900 text-white",
+      bingoLineClasses: "border-blue-300 bg-blue-900 text-white",
+      normalClasses: "border-emerald-300/50 hover:border-emerald-300 bg-slate-900 text-white",
       stampColor: "radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(4,120,87,0.9) 100%)",
       stampText: "FUNDED",
       icons: ["💰", "📊", "💎", "📈"]
@@ -120,11 +120,10 @@ export function BingoCard({
     return bingoLines.some(line => line.includes(index));
   };
 
-  // Generate random rotation for each square for a more playful look
+  // Remove random rotation for a cleaner, more uniform look
   const getRandomRotation = (index: number) => {
-    // Use the index to create a consistent rotation
-    const seed = index * 263 % 10; // Pseudorandom but consistent
-    return seed - 5; // Range from -5 to +5 degrees
+    // Always return 0 for a clean, aligned grid
+    return 0;
   };
 
   return (
@@ -172,7 +171,7 @@ export function BingoCard({
         )}
       </AnimatePresence>
 
-      <div className="grid grid-cols-5 gap-2 md:gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-0.5 xs:gap-1 sm:gap-2 md:gap-3 mb-6">
         {words.map((word, index) => {
           const isMarked = markedSquares[index];
           const isFreeSpace = index === 12;
@@ -185,11 +184,8 @@ export function BingoCard({
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                // Simplify animations for bingo lines to reduce CPU usage
-                rotate: isInBingoLine ? 
-                  // Only animate if in a bingo line, with less extreme values
-                  [getRandomRotation(index) - 1, getRandomRotation(index) + 1] : 
-                  getRandomRotation(index)
+                // No rotation for cleaner look
+                rotate: 0
               }}
               transition={{ 
                 delay: index * 0.01, // Reduced delay
@@ -204,12 +200,12 @@ export function BingoCard({
               whileHover={!isMarked && !isFreeSpace ? { scale: 1.03 } : {}}
               whileTap={!isMarked && !isFreeSpace ? { scale: 0.95 } : {}}
               className={cn(
-                "bingo-square relative aspect-square flex items-center justify-center p-2 text-center text-sm md:text-base font-medium",
-                "backdrop-blur-sm shadow-lg border",
-                isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-white marked`,
-                isFreeSpace && `${theme.freeSpaceClasses} text-white font-bold`,
-                isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-white`,
-                !isMarked && !isFreeSpace && `glass ${theme.normalClasses} text-indigo-100 cursor-pointer`
+                "bingo-square relative aspect-square flex items-center justify-center p-1 xs:p-1.5 sm:p-2 text-center text-sm md:text-base font-medium",
+                "backdrop-blur-sm shadow-md border text-slate-50", /* Force light text */
+                isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-slate-50 marked`,
+                isFreeSpace && `${theme.freeSpaceClasses} text-slate-50 font-bold`,
+                isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-slate-50`,
+                !isMarked && !isFreeSpace && `glass ${theme.normalClasses} text-slate-50 cursor-pointer`
               )}
               onClick={() => handleSquareClick(index)}
             >
@@ -218,27 +214,28 @@ export function BingoCard({
                 isMarked && !isFreeSpace && "bg-indigo-600/30",
                 isInBingoLine && "bg-emerald-600/30"
               )}>
-                {/* Background decorative elements */}
-                {[...Array(3)].map((_, i) => (
+                {/* Simplified background decorative elements */}
+                {[...Array(1)].map((_, i) => (
                   <div 
                     key={`decoration-${index}-${i}`} 
                     className="absolute rounded-full bg-white/10"
                     style={{
-                      width: `${Math.random() * 30 + 10}px`,
-                      height: `${Math.random() * 30 + 10}px`,
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
-                      opacity: 0.1 + Math.random() * 0.2
+                      width: '20px',
+                      height: '20px',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      opacity: 0.1
                     }}
                   />
                 ))}
               </div>
 
-              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-3 text-center font-medium" style={{ wordBreak: "normal", hyphens: "none" }}>{word}</span>
+              <span className="relative z-10 px-0.5 xs:px-1 text-[9px] xxs:text-[10px] xs:text-xs sm:text-sm md:text-base line-clamp-2 text-center font-medium text-slate-50" style={{ wordBreak: "normal", hyphens: "manual", color: "#f8fafc" }}>{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] z-10"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] sm:w-[80%] sm:h-[80%] z-10"
                   initial={{ scale: 0, rotate: -20 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", bounce: 0.5 }}
@@ -264,7 +261,7 @@ export function BingoCard({
                     
                     {/* Stamp text */}
                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold">
-                      <span className="text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>{theme.stampText}</span>
+                      <span className="text-lg xs:text-xl sm:text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>{theme.stampText}</span>
                     </div>
                   </div>
                 </motion.div>

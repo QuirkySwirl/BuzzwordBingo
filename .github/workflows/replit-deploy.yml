@@ -1,0 +1,29 @@
+name: Deploy to Replit
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build client
+        run: cd client && npm install && npm run build
+        
+      - name: Deploy to Replit
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
+          # This action can be configured to deploy to Replit when connected to a GitHub repository

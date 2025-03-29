@@ -31,7 +31,9 @@ async function throwIfResNotOk(res: Response) {
 
 // Function to get the base API URL
 function getApiBaseUrl() {
-  return import.meta.env.VITE_API_URL || ''; // Default to empty string (relative URLs) when not set
+  // For production (deployed version), we use relative URLs
+  // This ensures API calls work regardless of the domain
+  return import.meta.env.VITE_API_URL || ''; 
 }
 
 export async function apiRequest(

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { BingoCard } from "./BingoCard";
 import { MeetingType } from "@shared/schema";
 import confetti from "canvas-confetti";
@@ -138,7 +138,7 @@ export function BingoCardContainer({
 
   // Add confetti-active class when the victory animation is shown
   return (
-    <div className={`md:w-2/3 lg:w-3/4 relative ${showVictoryAnimation ? 'confetti-active' : ''}`}>
+    <div className={`md:w-2/3 lg:w-3/4 relative bingo-card-container ${showVictoryAnimation ? 'confetti-active' : ''}`}>
       {/* Background glow effects */}
       <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 via-purple-500/5 to-pink-500/20 rounded-3xl blur-xl -z-10"></div>
       

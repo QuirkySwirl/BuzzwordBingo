@@ -6,14 +6,24 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-slate-700;
+  }
+
+  html {
+    color-scheme: dark !important;
   }
 
   body {
-    @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-foreground;
+    @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-indigo-50;
     font-family: 'Poppins', sans-serif;
     background-attachment: fixed;
     scroll-behavior: smooth;
+    color: #e5e7eb !important; /* Force light text */
+  }
+  
+  /* Hard override for text colors */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, a {
+    color: #e5e7eb !important;
   }
   
   /* Prevent hyphenation in bingo squares for better readability */
@@ -32,48 +42,50 @@
 
 /* Define custom screen sizes */
 @layer utilities {
-  @variants responsive {
-    /* Extra extra small - for tiny mobile screens */
-    @media (min-width: 320px) {
-      .xxs\:text-xs {
-        font-size: 0.75rem;
-        line-height: 1rem;
-      }
-      
-      .xxs\:line-clamp-none {
-        -webkit-line-clamp: unset;
-      }
+  /* Extra extra small - for tiny mobile screens */
+  @media (min-width: 320px) {
+    .xxs\:text-xs {
+      font-size: 0.75rem;
+      line-height: 1rem;
     }
     
-    /* Extra small - for small mobile screens */
-    @media (min-width: 390px) {
-      .xs\:text-xs {
-        font-size: 0.75rem;
-        line-height: 1rem;
-      }
-      
-      .xs\:text-sm {
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-      }
+    .xxs\:line-clamp-none {
+      -webkit-line-clamp: unset;
+    }
+  }
+  
+  /* Extra small - for small mobile screens */
+  @media (min-width: 390px) {
+    .xs\:text-xs {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
+    
+    .xs\:text-sm {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
     }
   }
 }
 
-/* Glassmorphism styles */
+/* Glassmorphism styles - darker version */
 .glass {
-  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  @apply bg-slate-900/90 backdrop-blur-md border border-indigo-300/30 shadow-xl text-white;
+  color: white !important;
 }
 
 .glass-card {
-  @apply glass rounded-xl;
+  @apply glass rounded-xl text-white;
   transition: all 0.3s ease;
   will-change: transform, opacity;
+  background-color: rgba(15, 23, 42, 0.9) !important; /* slate-900 with opacity */
+  color: white !important;
 }
 
 .glass-card:hover {
-  @apply shadow-lg bg-white/15;
+  @apply shadow-lg bg-indigo-950/80 text-white;
   transform: translateY(-5px);
+  color: white !important;
 }
 
 /* Animations */

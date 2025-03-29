@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { ControlPanel } from "@/components/ControlPanel";
-import { BingoCardContainer } from "@/components/BingoCardContainer";
-import { BuzzwordList } from "@/components/BuzzwordList";
-import { ShareModal } from "@/components/ShareModal";
-import { useBingoCard } from "@/hooks/useBingoCard";
-import { generateShareText } from "@/lib/bingo-utils";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { ControlPanel } from "../components/ControlPanel";
+import { BingoCardContainer } from "../components/BingoCardContainer";
+import { BuzzwordList } from "../components/BuzzwordList";
+import { ShareModal } from "../components/ShareModal";
+import { useBingoCard } from "../hooks/useBingoCard";
+import { generateShareText } from "../lib/bingo-utils";
 
 // Define type for meeting statistics
 interface MeetingStat {
@@ -140,10 +140,10 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/30 via-purple-600/30 to-pink-600/30"></div>
-          <div className="relative p-4 backdrop-blur-lg">
+          <div className="relative p-4 pb-5 sm:pb-4 backdrop-blur-lg flex items-center justify-center min-h-[3rem]">
             {meetingStats && meetingStats.length > 0 ? (
               <motion.div
-                className="text-sm md:text-base font-medium h-6"
+                className="text-sm md:text-base font-medium"
                 key={currentStatIndex}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}

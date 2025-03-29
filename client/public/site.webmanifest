@@ -1,16 +1,31 @@
 {
   "name": "Corporate Buzzword Bingo",
   "short_name": "Buzzword Bingo",
-  "description": "Turn tedious corporate meetings into fun with our buzzword bingo game. Create themed bingo cards for all-hands, product, strategy, and more!",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#1E1B4B",
-  "theme_color": "#1E1B4B",
   "icons": [
     {
       "src": "/bingo.svg",
-      "sizes": "any",
+      "sizes": "192x192",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/bingo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "theme_color": "#1E1B4B",
+  "background_color": "#121226",
+  "display": "standalone",
+  "start_url": "/",
+  "description": "Transform dull corporate meetings into an entertaining game with our buzzword bingo cards.",
+  "categories": ["entertainment", "games", "productivity", "humor"],
+  "shortcuts": [
+    {
+      "name": "Create Bingo Card",
+      "short_name": "Create Card",
+      "description": "Quickly create a new bingo card",
+      "url": "/?action=create",
+      "icons": [{ "src": "/bingo.svg", "sizes": "192x192" }]
     }
   ]
 }

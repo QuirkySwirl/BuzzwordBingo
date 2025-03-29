@@ -136,16 +136,20 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// Create server that passes requests to Express
+// Create HTTP server for both Vercel and Replit
 const server = createServer((req, res) => {
-  // Parse the request URL
+  // For direct access (used by Replit)
   const parsedUrl = parse(req.url, true);
-  
-  // Pass the request to Express
   app(req, res);
 });
 
+// For Replit deployment, listen on the port if not being imported
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
 // Export for Vercel serverless function
-module.exports = (req, res) => {
-  app(req, res);
-};
+module.exports = app;

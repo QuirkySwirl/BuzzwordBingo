@@ -4,68 +4,62 @@
 
 ## 🎯 The Mission: Deploy Without "Leveraging Synergies"
 
-This app consists of a fun frontend and a buzzword-serving backend. Deployment platforms like Vercel and Netlify are mostly built for static sites, which means we need a strategic approach (but not a "strategic alignment initiative").
+This app consists of a fun frontend and a buzzword-serving backend. Deployment platforms like Vercel, Netlify, and Replit each have their own deployment dance.
 
-## 🔄 The Two-Part Deployment Dance
+## 🔄 Deployment Options
 
-### Step 1: Set Your Backend Free
+### Option 1: Replit (The "No Hassle" Approach)
 
-First, release your buzzword API into the wild:
+For the easiest deployment with zero configuration:
 
-#### Route A: Railway/Render/Heroku (The Easy Path)
+1. Make sure your Replit project is ready for deployment
+2. In the Replit shell, run:
+   ```
+   cd client && npm run build
+   ```
+   This builds the client-side app
+3. Then run this to start the API server that serves both the API and the built client:
+   ```
+   node replit-deploy.js
+   ```
+4. Click the "Run" button in Replit to make these changes permanent
+5. Enjoy your "synergistic deployment solution" at your Replit URL!
+
+### Option 2: Vercel (The Serverless Adventure)
+
+For those who want to "disrupt the traditional deployment paradigm":
+
+1. Use Vercel with the included `vercel.json` configuration which is already set up
+2. Make sure the API part works by checking `/api/meeting-types` endpoint
+3. Your app is now ready to "move the needle" at your Vercel URL
+
+### Option 3: Railway/Render/Heroku (The Traditional Path)
 
 These platforms love Express apps - they're like the buzzword-friendly managers of the hosting world:
 
 1. Sign up on [Railway](https://railway.app), [Render](https://render.com), or [Heroku](https://heroku.com)
 2. Connect your repo (they're all about "seamless integration")
-3. Build command: `npm install` (no "cross-functional paradigm shifts" needed)
+3. Build command: `npm install && cd client && npm run build` 
 4. Start command: `npm run start`
-5. Grab your fresh API URL like `https://buzzword-bingo-api.railway.app`
-
-#### Route B: Vercel (The Serverless Adventure)
-
-For those who want to "disrupt the traditional deployment paradigm":
-
-1. Create a copy of just the server files to a new repository
-2. Deploy to Vercel
-3. Your API is now ready to "move the needle" at something like `https://buzzword-bingo-api.vercel.app`
-
-### Step 2: Frontend Liberation
-
-With your backend "empowered to deliver maximum value," it's time to deploy the frontend:
-
-1. Create a `.env.production` file with your backend URL:
-   ```
-   VITE_API_URL=https://your-backend-url.com
-   ```
-2. Build the frontend: `npm run build`
-3. Deploy the `dist` directory to Vercel or Netlify
-4. Congratulations on achieving "frontend deployment excellence"
-
-## 🪄 The "One-Click Wonder" Approach
-
-For those who prefer to "streamline processes for maximum efficiency":
-
-1. Use Vercel with the included `vercel.json` configuration
-2. Add the `VITE_API_URL` environment variable 
-3. Deploy and watch the "implementation success metrics" soar!
+5. Enjoy your fresh deployment!
 
 ## 🔍 Troubleshooting: When Things Go "Sub-Optimal"
 
 If you see raw code instead of beautiful bingo cards:
 
-1. Check that your repo is public (because "transparency is a core value")
-2. Verify your `vercel.json` configuration (no "technical debt" allowed)
-3. Double-check your build settings (avoid "mission-critical failure points")
-4. Confirm your environment variables (maintain "robust configuration integrity")
+1. Check that the client build worked (you should see a `client/dist` folder)
+2. Make sure the API server is running (try accessing `/api/meeting-types`)
+3. For Replit specific issues:
+   - Try running `node api/index.js` to start just the API server
+   - Make sure your `.env` files don't conflict
+   - Try the Replit deployment script: `node replit-deploy.js`
 
-## 🧪 Local Testing: "Proof of Concept"
+## 🧪 Testing Before Deployment
 
-To test locally before "going to market":
+To test your build locally before deploying:
 
-1. Build: `cd client && npm run build`
-2. Install a static server: `npm install -g serve`
-3. Run it: `serve -s dist`
-4. Note: API calls need the backend running locally (no "seamless integration" without both parts)
+1. Build the client: `cd client && npm run build`
+2. Start the server: `npm run dev` (in development mode) or `node replit-deploy.js` (in production mode)
+3. Your app should be accessible with all features working
 
 *Remember: A successful deployment is just another excuse to play Buzzword Bingo! "Let's circle back" if you need help.*

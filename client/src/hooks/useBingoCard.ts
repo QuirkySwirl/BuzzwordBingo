@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
-import { checkForBingo, calculateBingoProgress } from '@/lib/bingo-utils';
+import { useToast } from "../hooks/use-toast";
+import { apiRequest } from "../lib/queryClient";
+import { checkForBingo, calculateBingoProgress } from "../lib/bingo-utils";
 
 interface BingoCardState {
   id: number | null;
@@ -65,6 +65,16 @@ export function useBingoCard() {
     }
     return result;
   };
+  
+  // Simple function to handle API failures by redirecting to server API
+  // This should not be needed in production if server is working properly
+  const handleBuzzwordFetchError = (err: unknown): never => {
+    console.error("Error fetching buzzwords:", err);
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    throw new Error("Unable to get buzzwords from server: " + errorMessage);
+  };
+  
+
 
   // Generate multiple bingo cards
   const generateCard = async (meetingType: string, numCards: number = 5) => {
@@ -72,36 +82,53 @@ export function useBingoCard() {
     console.log(`Generating ${numCards} bingo cards for ${meetingType} meeting type`);
     
     try {
-      const response = await apiRequest('POST', '/api/generate-card', { 
-        meetingType, 
-        numCards: 1 // Just request one card for consistency
-      });
-      const data = await response.json();
+      // First, get all the buzzwords for this meeting type
+      // We'll use these either for all cards (if API fails) or for additional cards
+      let allBuzzwords: string[] = [];
+      try {
+        const buzzwordsResponse = await apiRequest('GET', `/api/buzzwords/${meetingType}`);
+        allBuzzwords = await buzzwordsResponse.json();
+        
+        if (allBuzzwords.length < 24) {
+          throw new Error("Not enough buzzwords available");
+        }
+      } catch (buzzwordsError) {
+        // In production, we should let the error propagate up
+        // This ensures the app doesn't silently fail with incorrect data
+        handleBuzzwordFetchError(buzzwordsError);
+      }
       
-      // For the first card, use the data from the API
-      const firstCard: BingoCardState = {
-        id: data.id,
-        meetingType,
-        words: data.words,
-        markedSquares: Array(25).fill(false),
-        hasBingo: false,
-        bingoLines: [],
-        squaresMarkedCount: 0,
-        bingoProgress: 0
-      };
+      // Try to generate the first card from the API
+      let firstCard: BingoCardState;
+      try {
+        const response = await apiRequest('POST', '/api/generate-card', { 
+          meetingType, 
+          numCards: 1 // Just request one card for consistency
+        });
+        const data = await response.json();
+        
+        // For the first card, use the data from the API
+        firstCard = {
+          id: data.id || Date.now(),
+          meetingType,
+          words: data.words,
+          markedSquares: Array(25).fill(false),
+          hasBingo: false,
+          bingoLines: [],
+          squaresMarkedCount: 0,
+          bingoProgress: 0
+        };
+      } catch (err) {
+        console.error("Error generating cards:", err);
+        // In production, we should let the error propagate to show proper error UI
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        throw new Error("Error generating bingo cards: " + errorMessage);
+      }
       
       // Mark FREE SPACE automatically for first card
       firstCard.markedSquares[12] = true;
       firstCard.squaresMarkedCount = 1;
       firstCard.bingoProgress = 4; // 1/25 = 4%
-      
-      // Create additional cards using the buzzwords for this meeting type
-      const buzzwordsResponse = await apiRequest('GET', `/api/buzzwords/${meetingType}`);
-      const allBuzzwords = await buzzwordsResponse.json();
-      
-      if (allBuzzwords.length < 24) {
-        throw new Error("Not enough buzzwords for additional cards");
-      }
       
       // Generate additional cards (limit to selected number)
       const additionalCards: BingoCardState[] = [];
@@ -122,7 +149,7 @@ export function useBingoCard() {
         ];
         
         const newCard = {
-          id: data.id + i + 1, // Use a pseudo-ID
+          id: firstCard.id ? firstCard.id + i + 1 : Date.now() + i + 1, // Use a pseudo-ID
           meetingType,
           words: cardWords,
           markedSquares: Array(25).fill(false),

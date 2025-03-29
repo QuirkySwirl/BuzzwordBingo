@@ -61,55 +61,36 @@ export function Header() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3 self-end sm:self-auto">
-            <motion.div
-              className="hidden sm:flex gap-6 mr-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="self-end sm:self-auto"
+          >
+            <Button 
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-3 py-2 rounded-lg transition-all"
+              onClick={() => {
+                const shareText = "I'm using Corporate Buzzword Bingo to survive meetings! 73% of people do other work during meetings - mine is playing bingo 😂";
+                if (navigator.share) {
+                  navigator.share({
+                    title: 'Corporate Buzzword Bingo',
+                    text: shareText,
+                    url: window.location.href,
+                  })
+                } else {
+                  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+                }
+              }}
             >
-              <span 
-                onClick={() => window.location.href = "/about"} 
-                className="text-indigo-200 hover:text-white transition-colors hover:underline underline-offset-4 text-sm font-medium cursor-pointer"
-              >
-                About
+              <span className="flex items-center">
+                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M6 1v3M10 1v3M14 1v3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Share App
               </span>
-              <span 
-                onClick={() => window.location.href = "/privacy"} 
-                className="text-indigo-200 hover:text-white transition-colors hover:underline underline-offset-4 text-sm font-medium cursor-pointer"
-              >
-                Privacy
-              </span>
-              <span 
-                onClick={() => window.location.href = "/terms"} 
-                className="text-indigo-200 hover:text-white transition-colors hover:underline underline-offset-4 text-sm font-medium cursor-pointer"
-              >
-                Terms
-              </span>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <Button 
-                className="relative group overflow-hidden"
-                size="sm"
-                onClick={handleDonateClick}
-              >
-                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"></span>
-                <span className="absolute -inset-0.5 bg-gradient-to-r from-pink-500/30 to-purple-500/30 rounded-md blur opacity-30 group-hover:opacity-100 transition duration-500 group-hover:duration-200"></span>
-                
-                <span className="relative z-10 flex items-center">
-                  <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  Support Us
-                </span>
-              </Button>
-            </motion.div>
-          </div>
+            </Button>
+          </motion.div>
         </motion.div>
         
         {/* Subtle divider */}

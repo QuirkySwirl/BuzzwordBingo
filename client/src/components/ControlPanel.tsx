@@ -33,8 +33,22 @@ export function ControlPanel({
   onSwitchCard
 }: ControlPanelProps) {
   const [selectedMeetingType, setSelectedMeetingType] = useState(meetingType);
-  const [numCards, setNumCards] = useState(5);
+  // Fixed number of cards to 5
   const [activeTab, setActiveTab] = useState("play");
+
+  // Meeting type quirky descriptions
+  const meetingTypeQuips: Record<string, string> = {
+    "all-hands": "Where synergy meets circle-back in perfect harmony!",
+    "strategy": "Strategic pillars and blue oceans, guaranteed to impress!",
+    "budget": "Bottom lines, top lines, and everything in-between!",
+    "product": "Where roadmaps lead to the land of MVP and user stories!",
+    "quarterly": "KPIs, OKRs, and all the numbers that matter (or not)!",
+    "offsite": "Team building in fancy locations with fancy buzzwords!",
+    "board": "Impress the suits with governance and stakeholder value!",
+    "layoff": "Restructuring and right-sizing for optimal resource allocation!",
+    "performance": "Growth mindsets and stretch goals for everyone!",
+    "kickoff": "The beginning of endless scope creep and action items!",
+  };
 
   // Fetch meeting types from API
   const { data: meetingTypes, isLoading } = useQuery<MeetingType[]>({
@@ -56,11 +70,8 @@ export function ControlPanel({
   };
 
   const handleGenerateClick = () => {
-    onGenerateCard(selectedMeetingType, numCards);
-  };
-
-  const handleCardNumberChange = (value: string) => {
-    setNumCards(parseInt(value));
+    // Always generate 5 cards
+    onGenerateCard(selectedMeetingType, 5);
   };
 
   return (
@@ -138,26 +149,13 @@ export function ControlPanel({
                   )}
                 </div>
                 
-                <div>
-                  <Label htmlFor="numCards" className="text-sm font-medium text-indigo-200 mb-3 block">
-                    Number of Cards
-                  </Label>
-                  <div className="grid grid-cols-4 gap-2">
-                    {[5, 10, 15, 20].map((value) => (
-                      <Button
-                        key={value}
-                        variant={numCards === value ? "default" : "outline"}
-                        onClick={() => setNumCards(value)}
-                        className={`h-9 ${
-                          numCards === value 
-                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-none' 
-                            : 'bg-white/5 border-indigo-300/30 text-indigo-100 hover:bg-indigo-800/20'
-                        }`}
-                      >
-                        {value}
-                      </Button>
-                    ))}
-                  </div>
+                {/* Meeting type description */}
+                <div className="mt-2 mb-2">
+                  {selectedMeetingType && meetingTypeQuips[selectedMeetingType] && (
+                    <p className="text-xs text-indigo-300 italic glass bg-white/5 rounded-lg p-3 border border-indigo-300/10">
+                      {meetingTypeQuips[selectedMeetingType]}
+                    </p>
+                  )}
                 </div>
                 
                 <Button 
@@ -171,7 +169,7 @@ export function ControlPanel({
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>{isGenerating ? "Generating..." : `Generate ${numCards} Bingo Cards`}</span>
+                    <span>{isGenerating ? "Generating..." : "Generate Bingo Card"}</span>
                   </span>
                 </Button>
               </div>
@@ -280,8 +278,7 @@ export function ControlPanel({
             </h3>
             <ol className="text-sm text-indigo-200 space-y-1 list-decimal pl-4">
               <li>Select your meeting type</li>
-              <li>Choose how many cards to play (5, 10, 15, or 20)</li>
-              <li>Generate your bingo cards</li>
+              <li>Generate your bingo card</li>
               <li>Click squares when you hear buzzwords</li>
               <li>Complete a row, column, or diagonal to win</li>
               <li className="text-indigo-300 font-medium">Don't get caught playing!</li>

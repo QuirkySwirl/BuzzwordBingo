@@ -6,7 +6,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-slate-200 dark:border-slate-700;
   }
 
   body {
@@ -32,30 +32,28 @@
 
 /* Define custom screen sizes */
 @layer utilities {
-  @variants responsive {
-    /* Extra extra small - for tiny mobile screens */
-    @media (min-width: 320px) {
-      .xxs\:text-xs {
-        font-size: 0.75rem;
-        line-height: 1rem;
-      }
-      
-      .xxs\:line-clamp-none {
-        -webkit-line-clamp: unset;
-      }
+  /* Extra extra small - for tiny mobile screens */
+  @media (min-width: 320px) {
+    .xxs\:text-xs {
+      font-size: 0.75rem;
+      line-height: 1rem;
     }
     
-    /* Extra small - for small mobile screens */
-    @media (min-width: 390px) {
-      .xs\:text-xs {
-        font-size: 0.75rem;
-        line-height: 1rem;
-      }
-      
-      .xs\:text-sm {
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-      }
+    .xxs\:line-clamp-none {
+      -webkit-line-clamp: unset;
+    }
+  }
+  
+  /* Extra small - for small mobile screens */
+  @media (min-width: 390px) {
+    .xs\:text-xs {
+      font-size: 0.75rem;
+      line-height: 1rem;
+    }
+    
+    .xs\:text-sm {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
     }
   }
 }

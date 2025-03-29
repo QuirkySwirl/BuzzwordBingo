@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button } from "../components/ui/button";
 import { BingoCard } from "./BingoCard";
 import { MeetingType } from "@shared/schema";
 import confetti from "canvas-confetti";

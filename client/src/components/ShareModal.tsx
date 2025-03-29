@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { FaTwitter, FaLinkedin, FaCopy, FaDownload, FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import { Label } from "../components/ui/label";
+import { useToast } from "../hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import html2canvas from "html2canvas";
 

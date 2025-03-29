@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { ControlPanel } from "@/components/ControlPanel";
-import { BingoCardContainer } from "@/components/BingoCardContainer";
-import { BuzzwordList } from "@/components/BuzzwordList";
-import { ShareModal } from "@/components/ShareModal";
-import { useBingoCard } from "@/hooks/useBingoCard";
-import { generateShareText } from "@/lib/bingo-utils";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
+import { ControlPanel } from "../components/ControlPanel";
+import { BingoCardContainer } from "../components/BingoCardContainer";
+import { BuzzwordList } from "../components/BuzzwordList";
+import { ShareModal } from "../components/ShareModal";
+import { useBingoCard } from "../hooks/useBingoCard";
+import { generateShareText } from "../lib/bingo-utils";
 
 // Define type for meeting statistics
 interface MeetingStat {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
-import { checkForBingo, calculateBingoProgress } from '@/lib/bingo-utils';
+import { useToast } from "../hooks/use-toast";
+import { apiRequest } from "../lib/queryClient";
+import { checkForBingo, calculateBingoProgress } from "../lib/bingo-utils";
 
 interface BingoCardState {
   id: number | null;

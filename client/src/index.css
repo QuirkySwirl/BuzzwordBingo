@@ -68,6 +68,7 @@
 .glass-card {
   @apply glass rounded-xl;
   transition: all 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .glass-card:hover {
@@ -89,15 +90,18 @@
 /* Bingo square animations */
 .bingo-square {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform, box-shadow;
 }
 
 .bingo-square:hover:not(.marked) {
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(0);
   @apply shadow-lg;
 }
 
 .marked {
   animation: pulse 2s infinite;
+  /* Optimize for GPU rendering */
+  transform: translateZ(0);
 }
 
 @keyframes pulse {
@@ -121,11 +125,13 @@
 
 .floating-button {
   @apply bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white transition-all duration-300;
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
 }
 
 .floating-button:hover {
   @apply from-indigo-600 to-fuchsia-600 shadow-lg shadow-indigo-500/20;
-  transform: translateY(-3px);
+  transform: translateY(-3px) translateZ(0);
 }
 
 /* Card glow effects */

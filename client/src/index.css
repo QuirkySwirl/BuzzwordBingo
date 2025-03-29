@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,6 +10,116 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-foreground;
+    font-family: 'Poppins', sans-serif;
+    background-attachment: fixed;
+  }
+
+  :root {
+    --particle-size: 20px;
+  }
+}
+
+/* Glassmorphism styles */
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.glass-card {
+  @apply glass rounded-xl;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  @apply shadow-lg bg-white/15;
+  transform: translateY(-5px);
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Bingo square animations */
+.bingo-square {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bingo-square:hover:not(.marked) {
+  transform: scale(1.05);
+  @apply shadow-lg;
+}
+
+.marked {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(129, 140, 248, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(129, 140, 248, 0); }
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  @apply bg-indigo-600/30;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.particle:nth-child(odd) {
+  @apply bg-fuchsia-500/20;
+}
+
+.floating-button {
+  @apply bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white transition-all duration-300;
+}
+
+.floating-button:hover {
+  @apply from-indigo-600 to-fuchsia-600 shadow-lg shadow-indigo-500/20;
+  transform: translateY(-3px);
+}
+
+/* Card glow effects */
+.bingo-card-won {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px 0 rgba(129, 140, 248, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px 10px rgba(129, 140, 248, 0.7);
+  }
+}
+
+/* Confetti animation */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  z-index: 1000;
+  animation: confetti-fall 4s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 1;
+    top: -10px;
+    transform: translateX(0) rotateZ(0deg);
+  }
+  100% {
+    opacity: 0;
+    top: 100vh;
+    transform: translateX(calc(random() * 100px)) rotateZ(360deg);
   }
 }

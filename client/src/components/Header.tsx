@@ -1,11 +1,13 @@
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { useState } from "react";
+import { ShareModal } from "./ShareModal";
 
 export function Header() {
-  const handleDonateClick = () => {
-    window.open("https://donate.example.com", "_blank");
-  };
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  const shareText = "I'm using Corporate Buzzword Bingo to survive meetings! 73% of people do other work during meetings - mine is playing bingo 😂";
 
   return (
     <header className="relative z-50">
@@ -69,35 +71,16 @@ export function Header() {
           >
             <Button 
               className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-3 py-2 rounded-lg transition-all"
-              onClick={() => {
-                const shareText = "I'm using Corporate Buzzword Bingo to survive meetings! 73% of people do other work during meetings - mine is playing bingo 😂";
-                if (navigator.share) {
-                  navigator.share({
-                    title: 'Corporate Buzzword Bingo',
-                    text: shareText,
-                    url: window.location.href,
-                  }).catch(err => console.log('Error sharing:', err));
-                } else {
-                  // Create a temporary textarea element to copy the URL to clipboard
-                  const textarea = document.createElement('textarea');
-                  textarea.value = `${shareText}\n${window.location.href}`;
-                  document.body.appendChild(textarea);
-                  textarea.select();
-                  document.execCommand('copy');
-                  document.body.removeChild(textarea);
-                  
-                  // Show a toast notification
-                  alert('Link copied to clipboard! Share with your colleagues!');
-                }
-              }}
+              onClick={() => setIsShareModalOpen(true)}
+              aria-label="Share app"
             >
               <span className="flex items-center">
-                <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="w-4 h-4 sm:mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M16 6l-4-4-4 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M12 2v13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                share 
+                <span className="hidden sm:inline">share</span> 
               </span>
             </Button>
           </motion.div>
@@ -132,6 +115,14 @@ export function Header() {
           />
         ))}
       </div>
+
+      {/* Share Modal */}
+      <ShareModal 
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        shareText={shareText}
+        cardRef={{current: null}} // We're just sharing the app, not a specific card
+      />
     </header>
   );
 }

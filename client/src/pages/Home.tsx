@@ -140,7 +140,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/30 via-purple-600/30 to-pink-600/30"></div>
-          <div className="relative p-4 backdrop-blur-lg">
+          <div className="relative p-4 pb-5 sm:pb-4 backdrop-blur-lg">
             {meetingStats && meetingStats.length > 0 ? (
               <motion.div
                 className="text-sm md:text-base font-medium h-6"

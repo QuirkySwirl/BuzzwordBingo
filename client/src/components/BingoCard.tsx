@@ -158,30 +158,39 @@ export function BingoCard({
                 ))}
               </div>
 
-              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-2 break-words hyphens-auto">{word}</span>
+              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-3 text-center font-medium" style={{ wordBreak: "normal", hyphens: "none" }}>{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] z-10"
-                  initial={{ scale: 0, rotate: -10 }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] z-10"
+                  initial={{ scale: 0, rotate: -20 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", bounce: 0.5 }}
                 >
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 24 24" 
-                    className="w-full h-full drop-shadow-md"
-                    style={{ filter: "drop-shadow(0 0 8px rgba(129, 140, 248, 0.5))" }}
-                  >
-                    <path d="M0 0h24v24H0z" fill="none"/>
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="url(#check-gradient)"/>
-                    <defs>
-                      <linearGradient id="check-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#818CF8" />
-                        <stop offset="100%" stopColor="#34D399" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                  {/* Red stamp effect */}
+                  <div className="relative w-full h-full">
+                    {/* Circular stamp background */}
+                    <div className="absolute inset-0 rounded-full bg-red-500/70 flex items-center justify-center" 
+                      style={{ 
+                        transform: "rotate(-5deg)",
+                        boxShadow: "inset 0 0 10px rgba(0,0,0,0.3)",
+                        border: "2px solid rgba(255,255,255,0.2)"
+                      }}
+                    >
+                      {/* Inner text shadow for depth */}
+                      <div className="absolute inset-0 rounded-full" 
+                        style={{ 
+                          boxShadow: "inset 0 0 15px rgba(0,0,0,0.4)",
+                          background: "radial-gradient(circle, rgba(220,38,38,0.8) 0%, rgba(185,28,28,0.9) 100%)"
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Stamp text */}
+                    <div className="absolute inset-0 flex items-center justify-center text-white font-bold">
+                      <span className="text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>HEARD</span>
+                    </div>
+                  </div>
                 </motion.div>
               )}
 

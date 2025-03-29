@@ -72,6 +72,14 @@ export function ControlPanel({
   const handleGenerateClick = () => {
     // Always generate 5 cards
     onGenerateCard(selectedMeetingType, 5);
+    
+    // Scroll to bingo card after a small delay to ensure it's rendered
+    setTimeout(() => {
+      document.querySelector('.glass-card')?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center'
+      });
+    }, 400);
   };
 
   return (

@@ -5,17 +5,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { MeetingType } from "@shared/schema";
-import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 
 interface ControlPanelProps {
-  onGenerateCard: (meetingType: string) => void;
+  onGenerateCard: (meetingType: string, numCards: number) => void;
   meetingType: string;
   squaresMarked: number;
   bingoProgress: number;
   isGenerating: boolean;
+  cardSet?: {
+    cards: any[];
+    activeCardIndex: number;
+    numCards: number;
+  };
+  onSwitchCard?: (index: number) => void;
 }
 
 export function ControlPanel({
@@ -23,16 +28,22 @@ export function ControlPanel({
   meetingType,
   squaresMarked,
   bingoProgress,
-  isGenerating
+  isGenerating,
+  cardSet,
+  onSwitchCard
 }: ControlPanelProps) {
   const [selectedMeetingType, setSelectedMeetingType] = useState(meetingType);
-  const [numCards, setNumCards] = useState(1);
-  const [customMeetingType, setCustomMeetingType] = useState("");
+  const [numCards, setNumCards] = useState(5);
   const [activeTab, setActiveTab] = useState("play");
 
   // Fetch meeting types from API
   const { data: meetingTypes, isLoading } = useQuery<MeetingType[]>({
     queryKey: ['/api/meeting-types'],
+  });
+
+  // Fetch meeting statistics for ticker
+  const { data: meetingStats } = useQuery({
+    queryKey: ['/api/meeting-stats'],
   });
 
   // Update selected meeting type when prop changes
@@ -45,15 +56,11 @@ export function ControlPanel({
   };
 
   const handleGenerateClick = () => {
-    onGenerateCard(selectedMeetingType);
+    onGenerateCard(selectedMeetingType, numCards);
   };
 
-  const handleAddCustomMeetingType = () => {
-    // This would typically send a request to the backend to add a new meeting type
-    // For now, we'll just show it in the UI
-    setCustomMeetingType("");
-    // Show toast notification
-    console.log("Custom meeting type added:", customMeetingType);
+  const handleCardNumberChange = (value: string) => {
+    setNumCards(parseInt(value));
   };
 
   return (
@@ -98,8 +105,8 @@ export function ControlPanel({
               <TabsTrigger value="play" className="data-[state=active]:bg-indigo-600/60 data-[state=active]:text-white">
                 Play
               </TabsTrigger>
-              <TabsTrigger value="customize" className="data-[state=active]:bg-indigo-600/60 data-[state=active]:text-white">
-                Customize
+              <TabsTrigger value="cards" className="data-[state=active]:bg-indigo-600/60 data-[state=active]:text-white">
+                My Cards
               </TabsTrigger>
             </TabsList>
             
@@ -126,37 +133,35 @@ export function ControlPanel({
                             {type.displayName}
                           </SelectItem>
                         ))}
-                        <SelectItem value="custom-meeting-1">Custom: Budget Meeting</SelectItem>
-                        <SelectItem value="custom-meeting-2">Custom: Layoff Announcement</SelectItem>
                       </SelectContent>
                     </Select>
                   )}
                 </div>
                 
                 <div>
-                  <Label htmlFor="numCards" className="text-sm font-medium text-indigo-200 mb-2 block flex justify-between">
-                    <span>Number of Cards</span>
-                    <span className="text-indigo-300">{numCards}</span>
+                  <Label htmlFor="numCards" className="text-sm font-medium text-indigo-200 mb-3 block">
+                    Number of Cards
                   </Label>
-                  <Slider 
-                    id="numCards"
-                    value={[numCards]} 
-                    min={1} 
-                    max={4} 
-                    step={1} 
-                    onValueChange={(value) => setNumCards(value[0])}
-                    className="my-4"
-                  />
-                  <div className="grid grid-cols-4 gap-1 text-xs text-center text-indigo-300">
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {[5, 10, 15, 20].map((value) => (
+                      <Button
+                        key={value}
+                        variant={numCards === value ? "default" : "outline"}
+                        onClick={() => setNumCards(value)}
+                        className={`h-9 ${
+                          numCards === value 
+                            ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-none' 
+                            : 'bg-white/5 border-indigo-300/30 text-indigo-100 hover:bg-indigo-800/20'
+                        }`}
+                      >
+                        {value}
+                      </Button>
+                    ))}
                   </div>
                 </div>
                 
                 <Button 
-                  className="w-full floating-button relative group"
+                  className="w-full floating-button relative group mt-4"
                   onClick={handleGenerateClick}
                   disabled={isGenerating}
                 >
@@ -166,50 +171,96 @@ export function ControlPanel({
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>{isGenerating ? "Generating..." : "Generate New Cards"}</span>
+                    <span>{isGenerating ? "Generating..." : `Generate ${numCards} Bingo Cards`}</span>
                   </span>
                 </Button>
               </div>
             </TabsContent>
             
-            <TabsContent value="customize" className="mt-4">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="customMeetingType" className="text-sm font-medium text-indigo-200 mb-2 block">
-                    Add Custom Meeting Type
-                  </Label>
-                  <div className="flex space-x-2">
-                    <Input 
-                      id="customMeetingType" 
-                      placeholder="e.g., Quarterly Review"
-                      value={customMeetingType}
-                      onChange={(e) => setCustomMeetingType(e.target.value)}
-                      className="bg-white/5 border-indigo-300/30 text-indigo-100 placeholder:text-indigo-300/50 flex-1"
-                    />
-                    <Button 
-                      onClick={handleAddCustomMeetingType}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white"
-                      disabled={!customMeetingType.trim()}
-                    >
-                      Add
-                    </Button>
+            <TabsContent value="cards" className="mt-4">
+              {cardSet && cardSet.cards.length > 0 ? (
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-sm font-medium text-indigo-200 mb-2 block">
+                      Card Navigation
+                    </Label>
+                    <div className="glass bg-white/5 rounded-lg p-3 border border-indigo-300/20">
+                      <div className="flex justify-between items-center mb-3">
+                        <Badge variant="outline" className="bg-indigo-800/30 text-indigo-200 border-indigo-500/30">
+                          Active: Card {cardSet.activeCardIndex + 1} of {cardSet.cards.length}
+                        </Badge>
+                        
+                        <Badge variant="outline" className="bg-indigo-800/30 text-indigo-200 border-indigo-500/30">
+                          {meetingTypes?.find(m => m.name === meetingType)?.displayName || meetingType}
+                        </Badge>
+                      </div>
+                      
+                      <div className="grid grid-cols-5 gap-1">
+                        {Array.from({ length: cardSet.cards.length }).map((_, index) => {
+                          const cardNumber = index + 1;
+                          const isActive = index === cardSet.activeCardIndex;
+                          const hasBingo = cardSet.cards[index]?.hasBingo;
+                          
+                          return (
+                            <Button 
+                              key={index}
+                              variant={isActive ? "default" : "outline"}
+                              size="sm"
+                              className={`
+                                p-0 h-9
+                                ${isActive 
+                                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white border-none' 
+                                  : hasBingo
+                                    ? 'bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-green-500/30 text-green-300'
+                                    : 'bg-white/5 border-indigo-300/30 text-indigo-100'
+                                }
+                              `}
+                              onClick={() => onSwitchCard && onSwitchCard(index)}
+                            >
+                              {cardNumber}
+                              {hasBingo && (
+                                <span className="ml-1 text-xs">✓</span>
+                              )}
+                            </Button>
+                          );
+                        })}
+                      </div>
+                      
+                      <p className="text-indigo-300 text-xs mt-3 text-center">
+                        Click a card number to switch between cards
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-indigo-300 text-xs mt-2">
-                    Create your own meeting type with custom buzzwords!
-                  </p>
-                </div>
-                
-                <div className="mt-4">
-                  <Label className="text-sm font-medium text-indigo-200 mb-2 block">
-                    Add Custom Buzzwords (Coming Soon)
-                  </Label>
-                  <div className="glass bg-white/5 p-3 rounded-lg border border-indigo-300/20 text-center">
-                    <p className="text-indigo-200 text-sm italic">
-                      Soon you'll be able to add your own buzzwords to spice up your bingo game!
-                    </p>
+                  
+                  <div>
+                    <Label className="text-sm font-medium text-indigo-200 mb-2 block">
+                      Active Card Stats
+                    </Label>
+                    <div className="glass bg-white/5 rounded-lg p-3 border border-indigo-300/20 text-sm text-indigo-200">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="space-y-1">
+                          <p className="font-medium">Squares Marked</p>
+                          <p className="text-xl font-bold text-indigo-100">
+                            {squaresMarked}<span className="text-indigo-400 text-sm">/25</span>
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <p className="font-medium">Bingo Progress</p>
+                          <p className="text-xl font-bold text-indigo-100">{bingoProgress}<span className="text-indigo-400 text-sm">%</span></p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-8 text-center text-indigo-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-indigo-600 mb-3 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  <p className="mb-2">No bingo cards generated yet</p>
+                  <p className="text-sm opacity-80">Generate cards first to manage them</p>
+                </div>
+              )}
             </TabsContent>
           </Tabs>
           
@@ -229,7 +280,7 @@ export function ControlPanel({
             </h3>
             <ol className="text-sm text-indigo-200 space-y-1 list-decimal pl-4">
               <li>Select your meeting type</li>
-              <li>Choose how many cards to play</li>
+              <li>Choose how many cards to play (5, 10, 15, or 20)</li>
               <li>Generate your bingo cards</li>
               <li>Click squares when you hear buzzwords</li>
               <li>Complete a row, column, or diagonal to win</li>

@@ -1,7 +1,15 @@
-# robots.txt for https://buzz.aboveppt.com/
+# robots.txt for buzz.aboveppt.com
 User-agent: *
 Allow: /
-Disallow: /api/
 
-# Sitemap
+# Sitemaps
 Sitemap: https://buzz.aboveppt.com/sitemap.xml
+
+# Crawl delay for heavy resources
+Crawl-delay: 2
+
+# Don't index any URLs with query parameters
+Disallow: /*?*
+
+# Directories that don't need to be crawled
+Disallow: /api/

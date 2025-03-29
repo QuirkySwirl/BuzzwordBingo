@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark" data-theme="dark">
+<html lang="en" class="dark" data-theme="dark" style="color-scheme: dark !important; background-color: #121226 !important; color: #f8fafc !important;">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/bingo.svg" />
@@ -74,8 +74,16 @@
       }
     </script>
   </head>
-  <body>
-    <div id="root"></div>
+  <body style="background-color: #121226 !important; color: #f8fafc !important;">
+    <div id="root" style="background-color: #121226 !important; color: #f8fafc !important;"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Additional dark mode enforcement script
+      document.documentElement.classList.add('dark');
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.body.classList.add('dark');
+      document.body.style.backgroundColor = '#121226';
+      document.body.style.color = '#f8fafc';
+    </script>
   </body>
 </html>

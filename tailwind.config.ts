@@ -1,7 +1,8 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  darkMode: ["class", '[data-theme="dark"]'],
+  darkMode: "class", // Force dark mode with class strategy only
+  // We don't need any future options, removing them to avoid issues
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {

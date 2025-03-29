@@ -201,11 +201,11 @@ export function BingoCard({
               whileTap={!isMarked && !isFreeSpace ? { scale: 0.95 } : {}}
               className={cn(
                 "bingo-square relative aspect-square flex items-center justify-center p-1 xs:p-1.5 sm:p-2 text-center text-sm md:text-base font-medium",
-                "backdrop-blur-sm shadow-md border",
-                isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-white marked`,
-                isFreeSpace && `${theme.freeSpaceClasses} text-white font-bold`,
-                isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-white`,
-                !isMarked && !isFreeSpace && `glass ${theme.normalClasses} text-indigo-100 cursor-pointer`
+                "backdrop-blur-sm shadow-md border text-slate-50", /* Force light text */
+                isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-slate-50 marked`,
+                isFreeSpace && `${theme.freeSpaceClasses} text-slate-50 font-bold`,
+                isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-slate-50`,
+                !isMarked && !isFreeSpace && `glass ${theme.normalClasses} text-slate-50 cursor-pointer`
               )}
               onClick={() => handleSquareClick(index)}
             >
@@ -231,7 +231,7 @@ export function BingoCard({
                 ))}
               </div>
 
-              <span className="relative z-10 px-0.5 xs:px-1 text-[9px] xxs:text-[10px] xs:text-xs sm:text-sm md:text-base line-clamp-2 text-center font-medium" style={{ wordBreak: "normal", hyphens: "manual" }}>{word}</span>
+              <span className="relative z-10 px-0.5 xs:px-1 text-[9px] xxs:text-[10px] xs:text-xs sm:text-sm md:text-base line-clamp-2 text-center font-medium text-slate-50" style={{ wordBreak: "normal", hyphens: "manual", color: "#f8fafc" }}>{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 

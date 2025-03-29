@@ -1,11 +1,24 @@
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ShareModal } from "./ShareModal";
+import Typewriter from "typewriter-effect";
 
 export function Header() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [typewriterComplete, setTypewriterComplete] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  
+  // Set subtitle to appear after typewriter is nearly done
+  useEffect(() => {
+    // After 1.8 seconds (when typewriter is almost complete), show the subtitle
+    const timer = setTimeout(() => {
+      setShowSubtitle(true);
+    }, 1800);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const shareText = "I'm using Corporate Buzzword Bingo to survive meetings! 73% of people do other work during meetings - mine is playing bingo 😂";
 
@@ -44,19 +57,30 @@ export function Header() {
             </motion.div>
             
             <div className="ml-3">
-              <motion.h1 
+              <div 
                 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 text-transparent bg-clip-text"
-                initial={{ opacity: 0, x: -5 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
               >
-                Corporate Buzzword Bingo
-              </motion.h1>
+                <Typewriter
+                  onInit={(typewriter) => {
+                    typewriter
+                      .typeString('Corporate Buzzword Bingo')
+                      .callFunction(() => {
+                        setTypewriterComplete(true);
+                      })
+                      .start();
+                  }}
+                  options={{
+                    cursor: '|',
+                    delay: 50,
+                    deleteSpeed: 50
+                  }}
+                />
+              </div>
               <motion.p 
-                className="text-xs text-indigo-300 italic"
+                className="text-xs text-indigo-300 italic h-4"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                animate={{ opacity: showSubtitle ? 1 : 0 }}
+                transition={{ duration: 0.5 }}
               >
                 Survive your next meeting with style!
               </motion.p>

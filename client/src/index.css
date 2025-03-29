@@ -9,11 +9,21 @@
     @apply border-slate-700;
   }
 
+  html {
+    color-scheme: dark !important;
+  }
+
   body {
-    @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-foreground;
+    @apply font-sans antialiased bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-indigo-50;
     font-family: 'Poppins', sans-serif;
     background-attachment: fixed;
     scroll-behavior: smooth;
+    color: #e5e7eb !important; /* Force light text */
+  }
+  
+  /* Hard override for text colors */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, a {
+    color: #e5e7eb !important;
   }
   
   /* Prevent hyphenation in bingo squares for better readability */

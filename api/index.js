@@ -136,16 +136,5 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-// Create server that passes requests to Express
-const server = createServer((req, res) => {
-  // Parse the request URL
-  const parsedUrl = parse(req.url, true);
-  
-  // Pass the request to Express
-  app(req, res);
-});
-
 // Export for Vercel serverless function
-module.exports = (req, res) => {
-  app(req, res);
-};
+module.exports = app;

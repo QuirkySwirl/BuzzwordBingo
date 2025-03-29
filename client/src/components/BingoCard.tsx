@@ -172,7 +172,7 @@ export function BingoCard({
         )}
       </AnimatePresence>
 
-      <div className="grid grid-cols-5 gap-2 md:gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 md:gap-3 mb-6">
         {words.map((word, index) => {
           const isMarked = markedSquares[index];
           const isFreeSpace = index === 12;
@@ -234,7 +234,7 @@ export function BingoCard({
                 ))}
               </div>
 
-              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-3 text-center font-medium" style={{ wordBreak: "normal", hyphens: "none" }}>{word}</span>
+              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-3 text-center font-medium break-words" style={{ wordBreak: "normal", hyphens: "manual" }}>{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 

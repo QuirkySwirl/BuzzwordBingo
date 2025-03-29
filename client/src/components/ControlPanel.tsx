@@ -75,10 +75,19 @@ export function ControlPanel({
     
     // Scroll to bingo card after a small delay to ensure it's rendered
     setTimeout(() => {
-      document.querySelector('.glass-card')?.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'center'
-      });
+      // On mobile, scroll to the bingo card container specifically
+      if (window.innerWidth < 768) {
+        document.querySelector('.bingo-card-container')?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start'
+        });
+      } else {
+        // On desktop, the current behavior works fine
+        document.querySelector('.glass-card')?.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'center'
+        });
+      }
     }, 400);
   };
 

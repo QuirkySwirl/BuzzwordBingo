@@ -2,7 +2,7 @@
 
 *Ever found yourself in a meeting that could've been an email? Your salvation has arrived, co-created with AI.*
 
-![Corporate Meeting Survivors Unite](/generated-icon.png)
+![Corporate Meeting Survivors Unite](client/public/social-preview.png)
 
 ## 🎯 Why This Exists
 

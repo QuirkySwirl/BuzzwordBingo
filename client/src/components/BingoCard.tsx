@@ -120,11 +120,10 @@ export function BingoCard({
     return bingoLines.some(line => line.includes(index));
   };
 
-  // Generate random rotation for each square for a more playful look
+  // Remove random rotation for a cleaner, more uniform look
   const getRandomRotation = (index: number) => {
-    // Use the index to create a consistent rotation
-    const seed = index * 263 % 10; // Pseudorandom but consistent
-    return seed - 5; // Range from -5 to +5 degrees
+    // Always return 0 for a clean, aligned grid
+    return 0;
   };
 
   return (
@@ -172,7 +171,7 @@ export function BingoCard({
         )}
       </AnimatePresence>
 
-      <div className="grid grid-cols-5 gap-1.5 sm:gap-2 md:gap-3 mb-6">
+      <div className="grid grid-cols-5 gap-0.5 xs:gap-1 sm:gap-2 md:gap-3 mb-6">
         {words.map((word, index) => {
           const isMarked = markedSquares[index];
           const isFreeSpace = index === 12;
@@ -185,11 +184,8 @@ export function BingoCard({
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                // Simplify animations for bingo lines to reduce CPU usage
-                rotate: isInBingoLine ? 
-                  // Only animate if in a bingo line, with less extreme values
-                  [getRandomRotation(index) - 1, getRandomRotation(index) + 1] : 
-                  getRandomRotation(index)
+                // No rotation for cleaner look
+                rotate: 0
               }}
               transition={{ 
                 delay: index * 0.01, // Reduced delay
@@ -204,8 +200,8 @@ export function BingoCard({
               whileHover={!isMarked && !isFreeSpace ? { scale: 1.03 } : {}}
               whileTap={!isMarked && !isFreeSpace ? { scale: 0.95 } : {}}
               className={cn(
-                "bingo-square relative aspect-square flex items-center justify-center p-2 text-center text-sm md:text-base font-medium",
-                "backdrop-blur-sm shadow-lg border",
+                "bingo-square relative aspect-square flex items-center justify-center p-1 xs:p-1.5 sm:p-2 text-center text-sm md:text-base font-medium",
+                "backdrop-blur-sm shadow-md border",
                 isMarked && !isFreeSpace && `glass ${theme.markedClasses} text-white marked`,
                 isFreeSpace && `${theme.freeSpaceClasses} text-white font-bold`,
                 isInBingoLine && `bingo-card-won font-bold ${theme.bingoLineClasses} text-white`,
@@ -218,27 +214,28 @@ export function BingoCard({
                 isMarked && !isFreeSpace && "bg-indigo-600/30",
                 isInBingoLine && "bg-emerald-600/30"
               )}>
-                {/* Background decorative elements */}
-                {[...Array(3)].map((_, i) => (
+                {/* Simplified background decorative elements */}
+                {[...Array(1)].map((_, i) => (
                   <div 
                     key={`decoration-${index}-${i}`} 
                     className="absolute rounded-full bg-white/10"
                     style={{
-                      width: `${Math.random() * 30 + 10}px`,
-                      height: `${Math.random() * 30 + 10}px`,
-                      top: `${Math.random() * 100}%`,
-                      left: `${Math.random() * 100}%`,
-                      opacity: 0.1 + Math.random() * 0.2
+                      width: '20px',
+                      height: '20px',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      opacity: 0.1
                     }}
                   />
                 ))}
               </div>
 
-              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-3 text-center font-medium break-words" style={{ wordBreak: "normal", hyphens: "manual" }}>{word}</span>
+              <span className="relative z-10 px-0.5 xs:px-1 text-[9px] xxs:text-[10px] xs:text-xs sm:text-sm md:text-base line-clamp-2 text-center font-medium" style={{ wordBreak: "normal", hyphens: "manual" }}>{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] z-10"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] sm:w-[80%] sm:h-[80%] z-10"
                   initial={{ scale: 0, rotate: -20 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ type: "spring", bounce: 0.5 }}
@@ -264,7 +261,7 @@ export function BingoCard({
                     
                     {/* Stamp text */}
                     <div className="absolute inset-0 flex items-center justify-center text-white font-bold">
-                      <span className="text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>{theme.stampText}</span>
+                      <span className="text-lg xs:text-xl sm:text-2xl" style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.5)" }}>{theme.stampText}</span>
                     </div>
                   </div>
                 </motion.div>

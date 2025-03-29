@@ -1,0 +1,7 @@
+# robots.txt for https://buzz.aboveppt.com/
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://buzz.aboveppt.com/sitemap.xml

@@ -207,6 +207,74 @@
   transition: opacity 0.2s ease-in-out;
 }
 
+/* Use CSS animation for free space icon rotation instead of JS */
+.free-space-icon {
+  animation: slow-rotate 30s linear infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
+@keyframes slow-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Reduce animation load during confetti celebration */
+.confetti-active * {
+  transition-duration: 0.1s !important;
+  animation-duration: 0.1s !important;
+}
+
+/* Use hardware acceleration for smoother animations */
+.bingo-square, .glass-card, .motion-div {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* CSS animation for celebration glows instead of JS-based animation */
+@keyframes pulse-glow {
+  from { 
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  to { 
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+}
+
+/* Improve performance by using composite layers */
+.celebration-glow, .confetti-container, .free-space-icon {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Animation for victory message */
+.victory-message {
+  animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Reduce animations during confetti to prevent performance issues */
+.confetti-active .bingo-card-grid {
+  transition: none !important;
+}
+
+.confetti-active .free-space-icon {
+  animation-play-state: paused;
+}
+
 .marked .stamp {
   opacity: 1;
   animation: stamp-appear 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;

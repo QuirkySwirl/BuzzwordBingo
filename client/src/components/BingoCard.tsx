@@ -80,23 +80,23 @@ export function BingoCard({
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [confetti, setConfetti] = useState<{x: number, y: number, color: string}[]>([]);
 
-  // Create confetti effect when a square is marked
+  // Create confetti effect when a square is marked - optimized to prevent flickering
   useEffect(() => {
     if (animatingIndex === null) return;
     
-    // Create random confetti pieces
-    const newConfetti = Array.from({ length: 15 }, () => ({
-      x: Math.random() * 100 - 50, // random offset
-      y: Math.random() * 100 - 50, // random offset
+    // Create fewer confetti pieces to prevent performance issues
+    const newConfetti = Array.from({ length: 10 }, () => ({
+      x: Math.random() * 80 - 40, // Smaller range to keep particles more contained
+      y: Math.random() * 80 - 40, // Smaller range
       color: ['#818CF8', '#C084FC', '#F472B6', '#34D399', '#FBBF24'][Math.floor(Math.random() * 5)]
     }));
     
     setConfetti(newConfetti);
     
-    // Clean up confetti after animation
+    // Clean up confetti faster
     const timer = setTimeout(() => {
       setConfetti([]);
-    }, 2000);
+    }, 1000); // Reduced from 2000ms
     
     return () => clearTimeout(timer);
   }, [animatingIndex]);
@@ -129,39 +129,47 @@ export function BingoCard({
 
   return (
     <div className="relative">
-      {/* Confetti animation */}
-      <AnimatePresence>
-        {confetti.map((piece, i) => (
-          <motion.div
-            key={`confetti-${i}-${animatingIndex}`}
-            initial={{ 
-              opacity: 1,
-              scale: 0,
-              x: 0, 
-              y: 0,
-              rotate: 0
-            }}
-            animate={{ 
-              opacity: 0,
-              scale: 1,
-              x: piece.x, 
-              y: piece.y,
-              rotate: Math.random() * 360
-            }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            style={{ 
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '8px',
-              height: '8px',
-              backgroundColor: piece.color,
-              borderRadius: Math.random() > 0.5 ? '50%' : '0%',
-              zIndex: 10
-            }}
-          />
-        ))}
+      {/* Confetti animation - optimized for performance */}
+      <AnimatePresence mode="wait">
+        {confetti.length > 0 && (
+          <div className="confetti-container">
+            {confetti.map((piece, i) => (
+              <motion.div
+                key={`confetti-${i}-${animatingIndex || 0}`}
+                initial={{ 
+                  opacity: 1,
+                  scale: 0,
+                  x: 0, 
+                  y: 0,
+                  rotate: 0
+                }}
+                animate={{ 
+                  opacity: 0,
+                  scale: 1,
+                  x: piece.x, 
+                  y: piece.y,
+                  rotate: Math.random() * 360
+                }}
+                exit={{ opacity: 0 }}
+                transition={{ 
+                  duration: 0.8, // Faster animation
+                  ease: "easeOut" // Smoother easing function
+                }}
+                style={{ 
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: '6px', // Smaller particles
+                  height: '6px',
+                  backgroundColor: piece.color,
+                  borderRadius: Math.random() > 0.5 ? '50%' : '2px', // More efficient rendering
+                  zIndex: 5, // Lower z-index to prevent layering issues
+                  willChange: 'transform, opacity' // Performance optimization
+                }}
+              />
+            ))}
+          </div>
+        )}
       </AnimatePresence>
 
       <div className="grid grid-cols-5 gap-2 md:gap-3 mb-6">
@@ -177,17 +185,23 @@ export function BingoCard({
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                rotate: isInBingoLine ? [getRandomRotation(index), getRandomRotation(index) + 5, getRandomRotation(index)] : getRandomRotation(index)
+                // Simplify animations for bingo lines to reduce CPU usage
+                rotate: isInBingoLine ? 
+                  // Only animate if in a bingo line, with less extreme values
+                  [getRandomRotation(index) - 1, getRandomRotation(index) + 1] : 
+                  getRandomRotation(index)
               }}
               transition={{ 
-                delay: index * 0.02, 
-                duration: 0.3,
+                delay: index * 0.01, // Reduced delay
+                duration: 0.2, // Faster initial animation
                 rotate: {
-                  repeat: isInBingoLine ? Infinity : 0,
-                  duration: 1.5
+                  repeat: isInBingoLine ? 3 : 0, // Limited repeats instead of infinite
+                  duration: 2.5, // Slower rotation for less CPU usage
+                  ease: "easeInOut" // Smoother animation
                 }
               }}
-              whileHover={!isMarked && !isFreeSpace ? { scale: 1.05, rotate: 0 } : {}}
+              // Simpler hover effects
+              whileHover={!isMarked && !isFreeSpace ? { scale: 1.03 } : {}}
               whileTap={!isMarked && !isFreeSpace ? { scale: 0.95 } : {}}
               className={cn(
                 "bingo-square relative aspect-square flex items-center justify-center p-2 text-center text-sm md:text-base font-medium",
@@ -257,20 +271,18 @@ export function BingoCard({
               )}
 
               {isFreeSpace && (
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center opacity-20 z-5"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                <div 
+                  className="absolute inset-0 flex items-center justify-center opacity-20 z-5 free-space-icon"
                 >
-                  {/* Theme-specific icon or shape */}
+                  {/* Theme-specific icon or shape - static to prevent flickering */}
                   {theme.icons && theme.icons.length > 0 ? (
-                    <div className="text-6xl opacity-30">{theme.icons[Math.floor(Math.random() * theme.icons.length)]}</div>
+                    <div className="text-6xl opacity-30">{theme.icons[Math.floor((index * 263) % theme.icons.length)]}</div>
                   ) : (
                     <svg className="w-full h-full text-pink-100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                       <path d="M50 0 L100 50 L50 100 L0 50 Z" fill="currentColor" />
                     </svg>
                   )}
-                </motion.div>
+                </div>
               )}
             </motion.div>
           );

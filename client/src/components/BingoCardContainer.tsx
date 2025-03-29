@@ -45,58 +45,84 @@ export function BingoCardContainer({
     }
   }, [meetingType, meetingTypes]);
 
+  // Reference to track if confetti has already been generated
+  const confettiGeneratedRef = useRef(false);
+
   // Show victory animation when bingo is achieved
   useEffect(() => {
-    if (hasBingo) {
+    if (hasBingo && !confettiGeneratedRef.current) {
+      // Set the ref to true to prevent repeated generation
+      confettiGeneratedRef.current = true;
       setShowVictoryAnimation(true);
-      
-      // Play celebration sound effect (could add this functionality)
-      // const audio = new Audio('/victory.mp3');
-      // audio.play();
       
       // Generate victory confetti
       generateConfetti();
+      
+      // Reset the flag after a delay to allow future celebrations
+      const resetTimer = setTimeout(() => {
+        confettiGeneratedRef.current = false;
+      }, 3000);
+      
+      return () => clearTimeout(resetTimer);
     }
   }, [hasBingo]);
 
   const generateConfetti = () => {
     console.log("Generating confetti celebration!");
     
-    // Create intense confetti burst
-    const count = 300;
+    // Use a more optimized approach with fewer particles
+    const count = 200;
     const defaults = { 
       origin: { y: 0.7 },
       spread: 90,
       startVelocity: 30,
       gravity: 0.5,
-      ticks: 300,
-      zIndex: 9999,
+      ticks: 200,
+      zIndex: 1000,
       disableForReducedMotion: true
     };
 
+    // Create a canvas for the confetti to render on
+    const myCanvas = document.createElement('canvas');
+    myCanvas.style.position = 'fixed';
+    myCanvas.style.top = '0';
+    myCanvas.style.left = '0';
+    myCanvas.style.width = '100%';
+    myCanvas.style.height = '100%';
+    myCanvas.style.pointerEvents = 'none';
+    myCanvas.style.zIndex = '1000';
+    document.body.appendChild(myCanvas);
+    
+    // Create confetti instance on the canvas
+    const myConfetti = confetti.create(myCanvas, {
+      resize: true,
+      useWorker: true
+    });
+    
     function fire(particleRatio: number, opts: any) {
-      confetti({
+      myConfetti({
         ...defaults,
         ...opts,
         particleCount: Math.floor(count * particleRatio),
       });
     }
 
-    // Launch multiple bursts for a richer effect
-    fire(0.25, {
+    // Launch bursts with fewer particles
+    fire(0.2, {
       spread: 26,
       startVelocity: 55,
       origin: { x: 0.2, y: 0.7 },
       colors: ['#5D5FEF', '#8B5CF6', '#EC4899', '#22C55E']
     });
-    fire(0.25, {
+    
+    fire(0.2, {
       spread: 30,
       origin: { x: 0.8, y: 0.7 },
       colors: ['#3B82F6', '#22D3EE', '#10B981', '#6366F1']
     });
     
     // Central burst
-    fire(0.3, {
+    fire(0.25, {
       spread: 120,
       origin: { x: 0.5, y: 0.7 },
       startVelocity: 30,
@@ -104,19 +130,15 @@ export function BingoCardContainer({
       colors: ['#6366F1', '#EC4899', '#22C55E', '#EAB308', '#F97316']
     });
 
-    // Add a delayed secondary burst for continued celebration
+    // Clean up after animation completes
     setTimeout(() => {
-      fire(0.2, {
-        spread: 70,
-        decay: 0.92,
-        origin: { x: 0.5, y: 0.7 },
-        colors: ['#6366F1', '#8B5CF6', '#D946EF', '#EC4899']
-      });
-    }, 600);
+      document.body.removeChild(myCanvas);
+    }, 4000);
   };
 
+  // Add confetti-active class when the victory animation is shown
   return (
-    <div className="md:w-2/3 lg:w-3/4 relative">
+    <div className={`md:w-2/3 lg:w-3/4 relative ${showVictoryAnimation ? 'confetti-active' : ''}`}>
       {/* Background glow effects */}
       <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 via-purple-500/5 to-pink-500/20 rounded-3xl blur-xl -z-10"></div>
       
@@ -184,45 +206,40 @@ export function BingoCardContainer({
                 transition={{ duration: 0.5 }}
                 className="glass rounded-xl p-6 mb-6 text-center relative overflow-hidden"
               >
-                {/* Background animated patterns */}
+                {/* Background animated patterns - simplified for better performance */}
                 <div className="absolute inset-0 z-0 opacity-10">
-                  {[...Array(10)].map((_, i) => (
-                    <motion.div
-                      key={`celebration-${i}`}
-                      className="absolute rounded-full"
-                      style={{
-                        width: `${Math.random() * 100 + 50}px`,
-                        height: `${Math.random() * 100 + 50}px`,
-                        left: `${Math.random() * 100}%`, 
-                        top: `${Math.random() * 100}%`,
-                        background: `radial-gradient(circle, rgba(129, 140, 248, 0.8) 0%, rgba(192, 132, 252, 0) 70%)`,
-                      }}
-                      animate={{
-                        scale: [1, 1.5, 1],
-                        opacity: [0.2, 0.5, 0.2],
-                      }}
-                      transition={{
-                        duration: 3 + Math.random() * 2,
-                        repeat: Infinity,
-                        repeatType: "reverse",
-                      }}
-                    />
-                  ))}
+                  {/* Use fewer animation elements */}
+                  {[...Array(5)].map((_, i) => {
+                    // Create deterministic pseudo-random values based on index
+                    const width = 80 + ((i * 17) % 70);
+                    const height = 80 + ((i * 23) % 70);
+                    const left = ((i * 33) % 80) + 10; // 10-90%
+                    const top = ((i * 27) % 80) + 10; // 10-90%
+                    
+                    return (
+                      <div
+                        key={`celebration-static-${i}`}
+                        className="absolute rounded-full celebration-glow"
+                        style={{
+                          width: `${width}px`,
+                          height: `${height}px`,
+                          left: `${left}%`, 
+                          top: `${top}%`,
+                          background: `radial-gradient(circle, rgba(129, 140, 248, 0.8) 0%, rgba(192, 132, 252, 0) 70%)`,
+                          // Use CSS animation instead of Framer Motion for these elements
+                          animation: `pulse-glow ${3 + i % 2}s infinite alternate ease-in-out`
+                        }}
+                      />
+                    );
+                  })}
                 </div>
                 
-                <motion.div 
-                  className="relative z-10"
-                  initial={{ scale: 0.9 }}
-                  animate={{ scale: [0.9, 1.1, 1] }}
-                  transition={{ duration: 0.6, type: "spring" }}
-                >
+                <div className="relative z-10 bingo-message">
                   <h3 className="text-3xl font-extrabold mb-2 bg-gradient-to-r from-emerald-300 via-green-300 to-emerald-400 text-transparent bg-clip-text drop-shadow-md">BINGO!</h3>
-                  <motion.div
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ repeat: Infinity, duration: 2 }}
-                  >
+                  {/* Using CSS animation for better performance */}
+                  <div className="victory-message">
                     <p className="text-indigo-100 mb-4 font-medium">You're officially a corporate jargon master! Share your victory!</p>
-                  </motion.div>
+                  </div>
                   <Button 
                     className="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-medium shadow-lg shadow-emerald-700/20"
                     onClick={onShareCard}
@@ -232,7 +249,7 @@ export function BingoCardContainer({
                     </svg>
                     Share Your Victory
                   </Button>
-                </motion.div>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -68,7 +68,7 @@ export default function About() {
                 
                 <div className="my-6 rounded-lg overflow-hidden shadow-lg border border-indigo-500/30">
                   <img 
-                    src="/assets/images/app-screenshot.png" 
+                    src="/assets/social-preview.png" 
                     alt="Corporate Buzzword Bingo application interface showing a bingo card with buzzwords" 
                     className="w-full"
                   />

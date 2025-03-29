@@ -66,6 +66,17 @@ export default function About() {
                   Corporate Buzzword Bingo was born out of the countless hours we've all spent in meetings where certain phrases and buzzwords are repeated so often they begin to lose all meaning.
                 </p>
                 
+                <div className="my-6 rounded-lg overflow-hidden shadow-lg border border-indigo-500/30">
+                  <img 
+                    src="/assets/images/app-screenshot.png" 
+                    alt="Corporate Buzzword Bingo application interface showing a bingo card with buzzwords" 
+                    className="w-full"
+                  />
+                  <div className="p-3 bg-indigo-900/50 text-indigo-200 text-sm italic text-center">
+                    The application interface with buzzword-filled bingo card
+                  </div>
+                </div>
+                
                 <p>
                   We set out to create a fun, satirical game that brings a bit of joy to those long meetings filled with "synergy," "circle back," and "deep dives." Our mission is simple: to help you stay engaged while subtly poking fun at corporate speak.
                 </p>
@@ -99,6 +110,65 @@ export default function About() {
                   </div>
                 </motion.div>
                 
+                <motion.div
+                  className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 p-6 rounded-lg border border-indigo-500/20 my-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                >
+                  <h2 className="text-xl font-semibold mb-4 text-indigo-200">App Features</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>7 meeting types with unique buzzword sets</p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>Generate up to 20 unique bingo cards at once</p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>Animated bingo detection with multiple patterns</p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>Social media sharing and image download</p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>Visual bingo progress tracking</p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white mr-3 mt-0.5">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p>Global meeting statistics ticker banner</p>
+                    </div>
+                  </div>
+                </motion.div>
+                
                 <p>
                   Corporate Buzzword Bingo was created with the help of AI in 2023, proving that even artificial intelligence can appreciate the humor in our corporate communication quirks. The app uses real meeting statistics and a carefully curated collection of the most commonly overused corporate phrases.
                 </p>
@@ -109,11 +179,12 @@ export default function About() {
                 
                 <div className="pt-6 border-t border-indigo-800/30 mt-8">
                   <h2 className="text-xl font-semibold mb-4 text-indigo-200">Ready to play?</h2>
-                  <Link href="/">
-                    <a className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium transition-all transform hover:scale-105">
-                      Return to the Game
-                    </a>
-                  </Link>
+                  <button
+                    onClick={() => window.location.href = "/"}
+                    className="inline-block px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium transition-all transform hover:scale-105"
+                  >
+                    Return to the Game
+                  </button>
                 </div>
               </div>
             </div>

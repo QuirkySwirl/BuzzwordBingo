@@ -31,9 +31,13 @@ export const buzzwordData: Record<string, string[]> = {
     "Due Diligence", "Sprint", "Backlog", "User Story", "Pain Points",
     "Scalable", "Iterate", "Framework", "Proof of Concept", "Alignment",
     "Cost-Benefit", "Expectations", "Fast Track", "Value Proposition", "Execution",
-    "Next Steps", "Friction Points", "Strategic", "Roll Out", "North Star",
+    "Next Steps", "Friction Points", "Strategic", "Roll Out", "North Star", 
     "Phase One", "Requirements", "Blockers", "Success Criteria", "Target Audience",
-    "Dependencies", "Quickwin", "Mission Statement", "Risk Assessment", "RACI Matrix"
+    "Dependencies", "Quickwin", "Mission Statement", "Risk Assessment", "RACI Matrix",
+    "Growth Hacking", "First Principles", "Moonshot", "Lean Canvas", "OKRs",
+    "Design Sprint", "Product-Market Fit", "Blitzscaling", "10x Not 10%", "Unicorn Status",
+    "Ramen Profitable", "Customer Discovery", "Minimum Viable Test", "Pivot", "Traction",
+    "Viral Coefficient", "Bootstrapped", "Fail Fast", "T-shaped Skills", "AARRR Metrics"
   ],
   "performance": [
     "Growth Mindset", "Metrics", "Objectives", "Results-Driven", "Career Path",
@@ -54,7 +58,11 @@ export const buzzwordData: Record<string, string[]> = {
     "Ecosystem Play", "Strategic Initiative", "Transformation", "Key Success Factors", 
     "Emerging Markets", "Execution Framework", "Strategic Pillar", "Digital Strategy", 
     "Customer-Centric", "Vertical Integration", "Horizontal Integration", "Product Strategy", 
-    "Balanced Scorecard", "Mission Critical", "Future-Proof", "Market Dynamics", "Change Management"
+    "Balanced Scorecard", "Mission Critical", "Future-Proof", "Market Dynamics", "Change Management",
+    "First Principles", "North Star Metric", "Flywheel Model", "Platform Strategy", "Zero to One",
+    "Thought Leadership", "Innovative Disruption", "Canonical Strategy", "Adjacent Possibilities", "Hockey Stick Growth",
+    "Decision Velocity", "Strategic Moat", "Aggregation Theory", "Network Effects", "Economies of Scale",
+    "Experimentation", "Optionality", "Economies of Scope", "Lean Thinking", "Systems Thinking"
   ],
   "budget": [
     "Fiscal Year", "Bottom Line", "Top Line", "ROI", "Cost Center", 

@@ -122,7 +122,10 @@ export function ShareModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md glass border-indigo-500/20 text-indigo-100 p-0 overflow-hidden">
+      <DialogContent 
+        className="sm:max-w-md glass border-indigo-500/20 text-indigo-100 p-0 overflow-hidden"
+        aria-describedby="share-modal-description"
+      >
         <div className="absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-purple-900/80 to-indigo-900/80 opacity-80" />
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDIwIDAgTCAwIDAgMCAyMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDMpIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-20" />
@@ -132,6 +135,7 @@ export function ShareModal({
           <DialogTitle className="text-xl font-bold bg-gradient-to-r from-indigo-100 to-purple-100 text-transparent bg-clip-text">
             Share Your Bingo Card
           </DialogTitle>
+          <p id="share-modal-description" className="sr-only">Share your bingo card via text or as an image to social media or download it.</p>
         </DialogHeader>
         
         <div className="p-6">
@@ -207,6 +211,7 @@ export function ShareModal({
                   <Button 
                     className="bg-[#1DA1F2] hover:bg-[#1DA1F2]/90 text-white flex flex-col items-center py-5 h-auto"
                     onClick={shareToTwitter}
+                    aria-label="Share to Twitter"
                   >
                     <FaTwitter className="text-xl mb-1" />
                     <span className="text-xs">Twitter</span>
@@ -214,6 +219,7 @@ export function ShareModal({
                   <Button 
                     className="bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white flex flex-col items-center py-5 h-auto"
                     onClick={shareToLinkedIn}
+                    aria-label="Share to LinkedIn"
                   >
                     <FaLinkedin className="text-xl mb-1" />
                     <span className="text-xs">LinkedIn</span>
@@ -221,6 +227,7 @@ export function ShareModal({
                   <Button 
                     className="bg-[#25D366] hover:bg-[#25D366]/90 text-white flex flex-col items-center py-5 h-auto"
                     onClick={shareToWhatsapp}
+                    aria-label="Share to WhatsApp"
                   >
                     <FaWhatsapp className="text-xl mb-1" />
                     <span className="text-xs">WhatsApp</span>
@@ -228,6 +235,7 @@ export function ShareModal({
                   <Button 
                     className="bg-[#0088cc] hover:bg-[#0088cc]/90 text-white flex flex-col items-center py-5 h-auto"
                     onClick={shareToTelegram}
+                    aria-label="Share to Telegram"
                   >
                     <FaTelegramPlane className="text-xl mb-1" />
                     <span className="text-xs">Telegram</span>
@@ -235,6 +243,7 @@ export function ShareModal({
                   <Button 
                     className="bg-[#EA4335] hover:bg-[#EA4335]/90 text-white flex flex-col items-center py-5 h-auto"
                     onClick={shareByEmail}
+                    aria-label="Share via Email"
                   >
                     <MdEmail className="text-xl mb-1" />
                     <span className="text-xs">Email</span>
@@ -243,6 +252,7 @@ export function ShareModal({
                     className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white flex flex-col items-center py-5 h-auto"
                     onClick={handleCopyText}
                     disabled={isCopying}
+                    aria-label="Copy text to clipboard"
                   >
                     <FaCopy className="text-xl mb-1" />
                     <span className="text-xs">{isCopying ? "Copying..." : "Copy Text"}</span>
@@ -270,9 +280,11 @@ export function ShareModal({
                       className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white py-6"
                       onClick={handleShareImage}
                       disabled={isSharing}
+                      aria-label="Download bingo card as image"
+                      aria-busy={isSharing}
                     >
                       <div className="flex items-center justify-center">
-                        <FaDownload className="mr-2 text-lg" />
+                        <FaDownload className="mr-2 text-lg" aria-hidden="true" />
                         <span>{isSharing ? "Creating image..." : "Download Bingo Card as Image"}</span>
                       </div>
                     </Button>

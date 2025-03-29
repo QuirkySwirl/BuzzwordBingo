@@ -69,11 +69,12 @@ export function useBingoCard() {
   // Generate multiple bingo cards
   const generateCard = async (meetingType: string, numCards: number = 5) => {
     setIsGenerating(true);
+    console.log(`Generating ${numCards} bingo cards for ${meetingType} meeting type`);
     
     try {
       const response = await apiRequest('POST', '/api/generate-card', { 
         meetingType, 
-        numCards 
+        numCards: 1 // Just request one card for consistency
       });
       const data = await response.json();
       
@@ -89,6 +90,11 @@ export function useBingoCard() {
         bingoProgress: 0
       };
       
+      // Mark FREE SPACE automatically for first card
+      firstCard.markedSquares[12] = true;
+      firstCard.squaresMarkedCount = 1;
+      firstCard.bingoProgress = 4; // 1/25 = 4%
+      
       // Create additional cards using the buzzwords for this meeting type
       const buzzwordsResponse = await apiRequest('GET', `/api/buzzwords/${meetingType}`);
       const allBuzzwords = await buzzwordsResponse.json();
@@ -97,10 +103,13 @@ export function useBingoCard() {
         throw new Error("Not enough buzzwords for additional cards");
       }
       
-      // Generate additional cards
+      // Generate additional cards (limit to selected number)
       const additionalCards: BingoCardState[] = [];
       
-      for (let i = 1; i < numCards; i++) {
+      // Only generate numCards - 1 additional cards
+      const cardsToGenerate = Math.min(numCards - 1, 19); // Cap at 19 additional cards (20 total)
+      
+      for (let i = 0; i < cardsToGenerate; i++) {
         // Shuffle the buzzwords for each card to ensure uniqueness
         const shuffledWords = fisherYatesShuffle(allBuzzwords);
         const selectedWords = shuffledWords.slice(0, 24);
@@ -112,8 +121,8 @@ export function useBingoCard() {
           ...selectedWords.slice(12, 24)
         ];
         
-        additionalCards.push({
-          id: data.id + i, // Use a pseudo-ID
+        const newCard = {
+          id: data.id + i + 1, // Use a pseudo-ID
           meetingType,
           words: cardWords,
           markedSquares: Array(25).fill(false),
@@ -121,17 +130,27 @@ export function useBingoCard() {
           bingoLines: [],
           squaresMarkedCount: 0,
           bingoProgress: 0
-        });
+        };
+        
+        // Mark FREE SPACE automatically for all cards
+        newCard.markedSquares[12] = true;
+        newCard.squaresMarkedCount = 1;
+        newCard.bingoProgress = 4; // 1/25 = 4%
+        
+        additionalCards.push(newCard);
       }
+      
+      console.log(`Generated ${1 + additionalCards.length} cards in total`);
       
       setCardSet({
         cards: [firstCard, ...additionalCards],
         meetingType,
-        numCards,
+        numCards: 1 + additionalCards.length,
         activeCardIndex: 0
       });
       
     } catch (error) {
+      console.error("Error generating cards:", error);
       toast({
         title: "Error",
         description: "Failed to generate bingo cards. Please try again.",
@@ -190,8 +209,10 @@ export function useBingoCard() {
     const updatedCards = [...cardSet.cards];
     const card = updatedCards[cardIndex];
     
+    // Create a new array with all squares unmarked
     const newMarkedSquares = Array(25).fill(false);
-    newMarkedSquares[12] = true; // Keep free space marked
+    // Mark the center square (FREE space) as marked
+    newMarkedSquares[12] = true; 
     
     updatedCards[cardIndex] = {
       ...card,
@@ -206,6 +227,8 @@ export function useBingoCard() {
       ...cardSet,
       cards: updatedCards
     });
+    
+    console.log("Card reset! All squares unmarked except FREE space.");
   };
 
   // Get list of marked words for active card

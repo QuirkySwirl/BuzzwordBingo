@@ -158,7 +158,7 @@ export function BingoCard({
                 ))}
               </div>
 
-              <span className="relative z-10 px-1">{word}</span>
+              <span className="relative z-10 px-1 text-[10px] xxs:text-xs sm:text-sm md:text-base line-clamp-2 break-words hyphens-auto">{word}</span>
               
               {isMarked && !isFreeSpace && (
                 <motion.div 

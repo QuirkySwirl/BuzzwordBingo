@@ -91,20 +91,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get meeting statistics
   app.get("/api/meeting-stats", async (req, res) => {
     try {
-      // These are humorous fictional statistics for the ticker banner
+      // These are humorous global meeting statistics for the ticker banner
       const stats = [
-        { id: 1, text: "55 million meetings are held each day worldwide. Bingo opportunities are endless!" },
-        { id: 2, text: "The average employee spends 31 hours per month in unproductive meetings. That's prime bingo time!" },
-        { id: 3, text: "37% of meeting time is spent discussing buzzwords. Make it count with buzzword bingo!" },
-        { id: 4, text: "Professionals attend an average of 62 meetings per month. That's 62 chances to win at bingo!" },
-        { id: 5, text: "73% of people do other work during meetings. What better work than playing bingo?" },
-        { id: 6, text: "11 million meetings occur daily in the US alone. So many bingo cards waiting to be filled!" },
-        { id: 7, text: "Over 39% of meeting attendees fall asleep. Bingo will keep you awake!" },
-        { id: 8, text: "45% of senior managers think meetings are a waste of time. Make them fun with bingo!" },
-        { id: 9, text: "Approximately 25 million PowerPoint presentations are made daily. Each slide is a bingo opportunity!" },
-        { id: 10, text: "The average meeting lasts 1 hour 42 minutes. Perfect length for a full bingo card!" },
-        { id: 11, text: "Business professionals attend over 15 million meetings daily. How many bingo cards is that?" },
-        { id: 12, text: "Nearly 1/3 of all meetings are considered unnecessary. But bingo makes them necessary!" }
+        { id: 1, text: "📊 55 million meetings are held each day worldwide. Bingo opportunities are endless!" },
+        { id: 2, text: "⏱️ The average employee globally spends 31 hours per month in meetings. That's prime bingo time!" },
+        { id: 3, text: "🔄 Companies in Europe waste €33 billion annually on unnecessary meetings. Play bingo to reclaim value!" },
+        { id: 4, text: "💬 In Asia-Pacific, 37% of meeting time is spent discussing buzzwords. Make it count with bingo!" },
+        { id: 5, text: "📱 73% of people globally do other work during virtual meetings. What better work than playing bingo?" },
+        { id: 6, text: "🗓️ The average worker attends 62 meetings monthly worldwide. That's 62 chances to win at bingo!" },
+        { id: 7, text: "💤 Over 39% of meeting attendees globally admit to dozing off. Bingo will keep you awake!" },
+        { id: 8, text: "📉 45% of executives worldwide think meetings are a waste of time. Make them fun with bingo!" },
+        { id: 9, text: "📊 25 million PowerPoint presentations are made daily around the world. Each slide is a bingo opportunity!" },
+        { id: 10, text: "🕒 The average meeting globally lasts 1 hour 42 minutes. Perfect length for a full bingo card!" },
+        { id: 11, text: "⭐ Meetings increased by 12.9% globally post-pandemic. More opportunities for buzzword bingo!" },
+        { id: 12, text: "🔄 Executives in France spend 40% more time in meetings than their German counterparts. Vive le bingo!" },
+        { id: 13, text: "📈 Companies with agile methodologies have 25% more meetings. More agile, more bingo!" },
+        { id: 14, text: "🌐 Remote workers attend 29% more meetings than office workers. Remote bingo is still bingo!" },
+        { id: 15, text: "🇨🇳 Chinese tech companies average 9 hours of meetings weekly. Plenty of time for buzzword bingo!" },
+        { id: 16, text: "🇮🇳 Indian professionals rank highest in meeting multitasking at 67%. They're playing bingo, guaranteed!" },
+        { id: 17, text: "🇧🇷 Brazilian companies hold the longest meetings averaging 2h12m. Double bingo potential!" },
+        { id: 18, text: "🚀 Startup CEOs spend 40% of their workweek in meetings. Start-up bingo should be a thing!" },
+        { id: 19, text: "🌍 Businesses worldwide spend 15% of collective time in meetings. Time well spent with bingo!" },
+        { id: 20, text: "💼 71% of meetings are considered unproductive globally. But bingo makes them productive!" }
       ];
       
       res.json(stats);
